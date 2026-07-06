@@ -323,37 +323,38 @@
 
     </div>
 
-    <script>
-// 카카오 API 키 초기화
-if (!Kakao.isInitialized()) {
-    Kakao.init('c21e2b2b9c783f475207a25a1339a763'); 
-}
+<script>
 
-function shareKakao() {
-    Kakao.Share.sendDefault({
-        objectType: 'feed',
-        content: {
-            title: '대승 ＆ 서우 결혼합니다 💍', // 카톡에 뜰 제목
-            description: '소중한 분들을 초대합니다. 자리에 함께하시어 축복해 주세요.', // 설명
-            imageUrl: 'https://wedding-card-zzaru.vercel.app/images/main.jpg', // 카톡 썸네일로 쓸 메인 이미지 주소
-            link: {
-                mobileWebUrl: 'https://wedding-card-zzaru.vercel.app',
-                webUrl: 'https://wedding-card-zzaru.vercel.app',
-            },
-        },
-        buttons: [
-            {
-                title: '모바일 청첩장 보기',
-                link: {
-                    mobileWebUrl: 'https://wedding-card-zzaru.vercel.app',
-                    webUrl: 'https://wedding-card-zzaru.vercel.app',
+        // 2. 카카오톡 공유하기 함수 (독립된 공간으로 완벽하게 탈출 완료!)
+        function shareKakao() {
+        if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
+            Kakao.init('c21e2b2b9c783f475207a25a1339a763'); 
+        }
+            
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: '대승 ＆ 서우 결혼합니다 💍', // 카톡에 뜰 제목
+                    description: '소중한 분들을 초대합니다. 자리에 함께하시어 축복해 주세요.', // 설명
+                    imageUrl: 'https://wedding-card-zzaru.vercel.app/images/main.jpg', // 카톡 썸네일 이미지 주소
+                    link: {
+                        mobileWebUrl: 'https://wedding-card-zzaru.vercel.app',
+                        webUrl: 'https://wedding-card-zzaru.vercel.app',
+                    },
                 },
-            },
-        ],
-    });
-}
+                buttons: [
+                    {
+                        title: '모바일 청첩장 보기',
+                        link: {
+                            mobileWebUrl: 'https://wedding-card-zzaru.vercel.app',
+                            webUrl: 'https://wedding-card-zzaru.vercel.app',
+                        },
+                    },
+                ],
+            });
+        }
 
-        // 2. 아코디언 토글
+        // 3. 아코디언 토글
         function toggleAccordion(id) {
             const box = document.getElementById(id);
             const arrow = document.getElementById(id + '-arrow');
@@ -366,7 +367,7 @@ function shareKakao() {
             }
         }
 
-        // 3. 클립보드 복사
+        // 4. 클립보드 복사
         function copyText(val) {
             navigator.clipboard.writeText(val).then(() => alert('계좌번호가 복사되었습니다.'));
         }
@@ -374,12 +375,11 @@ function shareKakao() {
             navigator.clipboard.writeText(window.location.href).then(() => alert('청첩장 링크가 복사되었습니다.'));
         }
 
-        // 4. Swiper 슬라이더 연동 제어 엔진
+        // 5. Swiper 슬라이더 연동 제어 엔진
         const totalSlides = 18;
         let swiper;
 
         document.addEventListener('DOMContentLoaded', function () {
-            // 브라우저가 라이브러리를 안전하게 읽은 직후 Swiper 활성화
             swiper = new Swiper('.mainSwiper', {
                 slidesPerView: 1,
                 spaceBetween: 0,
@@ -398,7 +398,7 @@ function shareKakao() {
                         const percentage = ((activeIndex + 1) / totalSlides) * 100;
                         document.getElementById('galleryProgressBar').style.width = percentage + '%';
                         
-                        // 하단 썸네일 불빛(하이라이트) 교체 및 스크롤 자동 추적
+                        // 하단 썸네일 하이라이트 교체 및 스크롤 자동 추적
                         const thumbs = document.querySelectorAll('.thumb-img');
                         thumbs.forEach((thumb) => {
                             const idx = parseInt(thumb.getAttribute('data-idx'));
@@ -408,7 +408,7 @@ function shareKakao() {
                                 thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                             } else {
                                 thumb.classList.remove('opacity-100', 'border', 'border-black');
-                                thumb.classList.add('opacity-60');
+                                thumb.add('opacity-60');
                             }
                         });
                     }
@@ -420,7 +420,8 @@ function shareKakao() {
         function goToSlide(index) {
             if (swiper) swiper.slideTo(index);
         }
-        // 6. 파이어베이스 실시간 DB 연동 및 비밀번호 삭제 완벽 호환 스크립트
+
+        // 6. 파이어베이스 실시간 DB 연동 스크립트
         (function() {
             import('https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js').then((firebaseApp) => {
                 import('https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js').then((firebaseDatabase) => {
@@ -438,7 +439,7 @@ function shareKakao() {
                     const app = firebaseApp.initializeApp(firebaseConfig);
                     const db = firebaseDatabase.getDatabase(app);
 
-                    // 💬 [A] 실시간 데이터베이스 감시 및 리스트 출력 로직
+                    // 방명록 실시간 감시 및 출력
                     const dbRef = firebaseDatabase.ref(db, 'guestbook');
                     firebaseDatabase.onValue(dbRef, (snapshot) => {
                         const guestbookList = document.getElementById('guestbook-list');
@@ -451,23 +452,19 @@ function shareKakao() {
                             return;
                         }
 
-                        // 최신순 정렬 후 화면 렌더링
                         const keys = Object.keys(data).reverse();
                         keys.forEach((key) => {
                             const item = data[key];
                             const msgBox = document.createElement('div');
                             msgBox.className = 'w-full bg-gray-50 p-4 border border-gray-100 relative text-left';
                             
-                            // 💡 버튼 생성 시 파이어베이스 고유 ID(key)와 작성자가 쓴 비밀번호(item.pw)를 삭제 함수에 안전하게 던져줍니다.
                             msgBox.innerHTML = `
                                 <div class="flex justify-between items-center mb-1.5">
                                     <span class="font-bold text-xs text-gray-900">${item.name}</span>
                                     <div class="flex items-center space-x-2" >
                                         <span class="text-[10px] text-gray-400 font-light">${item.date}</span>
                                         <button onclick="window.deleteGuestbookMessage('${key}', '${item.pw}')" class=" text-[10px] text-gray-300 hover:text-red-500 font-light transition-colors">삭제</button>
-
                                     </div>
-
                                 </div>
                                 <p class="text-xs text-gray-700 font-light whitespace-pre-wrap leading-relaxed pr-8">${item.content}</p>
                             `;
@@ -475,7 +472,7 @@ function shareKakao() {
                         });
                     });
 
-                    // ✍️ [B] 방명록 등록하기 함수
+                    // 방명록 등록 함수
                     window.addGuestbookMessage = function() {
                         const name = document.getElementById('gb-name').value.trim();
                         const pw = document.getElementById('gb-pw').value.trim();
@@ -504,13 +501,11 @@ function shareKakao() {
                         });
                     };
 
-                    // 🔒 [C] ⭐️ 비밀번호 일치 시에만 데이터를 삭제하는 본인 확인 로직
+                    // 비밀번호 확인 및 삭제
                     window.deleteGuestbookMessage = function(key, correctPw) {
-                        // 하객에게 비밀번호 입력을 요구하는 팝업창을 띄웁니다.
                         const inputPw = prompt('방명록 작성 시 입력했던 비밀번호를 입력해주세요:');
-                        if (inputPw === null) return; // 취소 버튼을 누르면 중단
+                        if (inputPw === null) return;
 
-                        // 입력한 비밀번호와 DB에 들어있는 정답 비밀번호를 철저하게 비교합니다.
                         if (inputPw === correctPw) {
                             if (confirm('정말 이 축하 메시지를 삭제하시겠습니까?')) {
                                 const targetRef = firebaseDatabase.ref(db, 'guestbook/' + key);
