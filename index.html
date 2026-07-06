@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE WEDDING OF TAEHOON AND DANHEE</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=YOUR_CLIENT_ID_HERE"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+        }
+        .serif-font {
+            font-family: 'Cinzel', serif;
+            letter-spacing: -0.01em;
+            line-height: 0.95;
+        }
+        
+        /* ⭐️ 자바스크립트 버그로 안 보이는 현상을 막기 위해 기본 상태를 '보임'으로 수정 */
+        .scroll-animate {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        /* 대신 CSS 자체 애니메이션으로 브라우저가 켜질 때 차례대로 스르륵 나타나게 변경 */
+        .fade-in-1 { animation: fadeEffect 0.8s ease-out forwards; }
+        .fade-in-2 { animation: fadeEffect 0.8s ease-out 0.2s forwards; opacity: 0; }
+        .fade-in-3 { animation: fadeEffect 0.8s ease-out 0.4s forwards; opacity: 0; }
+
+        @keyframes fadeEffect {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 무한 흐르는 텍스트 배너 애니메이션 */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 20s linear infinite;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-start min-h-screen ">
+
+    <div class="w-[390px] bg-white shadow-2xl flex flex-col relative overflow-hidden">
+        
+<!-- 1. 메인 인트로 표지 섹션 (어떤 모바일에서든 화면 높이에 딱 맞게 꽉 채움) -->
+        <section class="w-full h-[100dvh] bg-white pt-10 pb-6 px-6 flex flex-col justify-between items-center text-center fade-in-1 relative">
+            
+            <!-- 상단 텍스트 영역 (상황에 맞춰 유연하게 줄어들 수 있도록 비율 조정) -->
+            <div class="w-full flex-1 flex flex-col justify-center items-center max-h-[40%] min-h-[180px]">
+                <h1 class="serif-font text-[32px] min-[390px]:text-[40px] text-black font-normal tracking-wide uppercase mb-3">
+                    THE<br>WEDDING<br>OF<br>DAESEUNG<br>AND<br>SEOWOO
+                </h1>
+                <div class="text-[12px] min-[390px]:text-[13px] font-medium tracking-wide text-black space-y-0.5">
+                    <p>2026.10.05, MONDAY 16:00</p>
+                    <p class="tracking-widest text-[11px] text-gray-500">L65 Hotel Wedding Convention</p>
+                </div>
+            </div>
+            
+            <!-- 하단 메인 사진 영역 (남은 세로 공간을 꽉 채우도록 flex-1 설정) -->
+            <div class="w-full flex-[1.5] bg-gray-100 relative rounded-sm overflow-hidden flex items-center justify-center mb-4 max-h-[55%]">
+                <img src="public/main_cover.jpg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="w-full h-full object-cover">
+                <div class="hidden absolute inset-0 flex-col items-center justify-center text-gray-400 text-xs bg-gray-100 p-4">
+                    <svg class="w-8 h-8 mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span>여기에 메인 사진이 들어갑니다</span>
+                </div>
+                
+                <!-- 아래방향 화살표 아이콘 -->
+                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-black rounded-full flex justify-center items-center shadow-md">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+            </div>
+        </section>
+
+        <section class="w-full py-16 px-6 bg-white border-t border-gray-50 flex flex-col fade-in-2">
+            <h2 class="serif-font text-[50px] text-black font-normal mb-4 leading-[0.95]">
+                THE<br>MARRIAGE<br>OF
+            </h2>
+            
+            <div class="w-full space-y-4 mb-24">
+                <div class="relative w-full h-[185px] bg-gray-100 overflow-hidden">
+                    <img src="public/groom.jpg" alt="" onerror="this.style.display='none';" class="w-full h-full object-cover">
+                    <div class="absolute bottom-4 left-4 right-4 bg-black text-white px-4 py-3 flex justify-between items-center text-[13px]">
+                        <span class="font-bold tracking-wider">대승</span>
+                        <span class="text-gray-300 text-xs font-light">종현, 경림의 아들</span>
+                    </div>
+                </div>
+                <div class="relative w-full h-[185px] bg-gray-100 overflow-hidden">
+                    <img src="public/bride.jpg" alt="" onerror="this.style.display='none';" class="w-full h-full object-cover">
+                    <div class="absolute bottom-4 left-4 right-4 bg-black text-white px-4 py-3 flex justify-between items-center text-[13px]">
+                        <span class="font-bold tracking-wider">서우</span>
+                        <span class="text-gray-300 text-xs font-light">영대, 시윤의 딸</span>
+                    </div>
+                </div>
+            </div>
+
+<div class="w-full mb-4">
+                <div class="serif-font text-[50px] text-black uppercase leading-[1.05] tracking-tight">
+                    2026.10.05<br>MONDAY<br>PM 4:00
+                </div>
+            </div>
+
+            <div class="w-full px-1">
+                <div class="grid grid-cols-7 gap-y-4 text-center text-[12px] font-medium text-black mb-4">
+                    <div class="text-[#00a2ed]">일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
+                </div>
+                <div class="grid grid-cols-7 gap-y-4 text-center text-[13px] font-normal text-black items-center">
+                    <div></div><div></div><div></div><div></div>
+                    
+                    <div>1</div><div>2</div><div>3</div>
+                    <div class="text-[#00a2ed]">4</div>
+                    
+                    <div class="flex justify-center items-center">
+                        <span class="w-7 h-7 bg-black text-white flex justify-center items-center font-bold text-xs">5</span>
+                    </div>
+                    
+                    <div>6</div><div>7</div><div>8</div><div>9</div><div>10</div>
+                    
+                    <div class="text-[#00a2ed]">11</div><div>12</div><div>13</div><div>14</div><div>15</div><div>16</div><div>17</div>
+                    
+                    <div class="text-[#00a2ed]">18</div><div>12</div><div>20</div><div>21</div><div>22</div><div>23</div><div>24</div>
+                    
+                    <div class="text-[#00a2ed]">25</div><div>26</div><div>27</div><div>28</div><div>29</div><div>30</div><div>31</div>
+                </div>
+            </div>
+        </section>
+
+<section class="w-full py-16 px-6 bg-white border-t border-gray-50">
+            <h2 class="serif-font text-[50px] text-black font-normal mb-4 text-left">GALLERY</h2>
+            <div class="w-full flex flex-col items-center">
+                
+                <div class="swiper mainSwiper w-full bg-gray-50 overflow-hidden mb-4 relative" style="height: 480px;">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_01.jpg" onerror="this.src='public/gallery_01.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
+                        <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_02.jpg" onerror="this.src='public/gallery_02.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
+                        <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_03.jpg" onerror="this.src='public/gallery_03.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
+                        <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_04.jpg" onerror="this.src='public/gallery_04.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
+                        <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_05.jpg" onerror="this.src='public/gallery_05.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
+                        <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_06.jpg" onerror="this.src='public/gallery_06.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
+                        <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_07.jpg" onerror="this.src='public/gallery_07.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
+                        <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_08.jpg" onerror="this.src='public/gallery_08.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
+                        <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_09.jpg" onerror="this.src='public/gallery_09.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
+                        <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_10.jpg" onerror="this.src='public/gallery_10.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
+                        <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_11.jpg" onerror="this.src='public/gallery_11.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
+                        <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_12.jpg" onerror="this.src='public/gallery_12.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
+                        <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_13.jpg" onerror="this.src='public/gallery_13.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
+                        <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_14.jpg" onerror="this.src='public/gallery_14.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
+                        <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_15.jpg" onerror="this.src='public/gallery_15.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
+                        <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_16.jpg" onerror="this.src='public/gallery_16.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
+                        <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_17.jpg" onerror="this.src='public/gallery_17.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
+                        <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_18.jpg" onerror="this.src='public/gallery_18.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
+                    </div>
+                </div>
+                
+                <div class="w-full h-[2px] bg-gray-100 mb-6 relative">
+                    <div id="galleryProgressBar" class="h-full bg-black transition-all duration-300" style="width: 5.55%;"></div>
+                </div>
+
+                <div class="w-full flex space-x-1.5 overflow-x-auto pb-2 scrollbar-none" id="thumbContainer">
+                    <img src="public/gallery_01.jpg" onerror="this.src='public/gallery_01.JPG'" onclick="goToSlide(0)" class="thumb-img w-[50px] h-[65px] object-cover cursor-pointer opacity-100 border border-black transition-all" data-idx="0">
+                    <img src="public/gallery_02.jpg" onerror="this.src='public/gallery_02.JPG'" onclick="goToSlide(1)" class="thumb-img w-[50px] h-[65px] object-cover cursor-pointer opacity-60 transition-all" data-idx="1">
+                    <img src="public/gallery_03.jpg" onerror="this.src='public/gallery_03.JPG'" onclick="goToSlide(2)" class="thumb-img w-[50px] h-[65px] object-cover cursor-pointer opacity-60 transition-all" data-idx="2">
+                    <img src="public/gallery_04.jpg" onerror="this.src='public/gallery_04.JPG'" onclick="goToSlide(3)" class="thumb-img w-[50px] h-[65px] object-cover cursor-pointer opacity-60 transition-all" data-idx="3">
+                    <img src="public/gallery_05.jpg" onerror="this.src='public/gallery_05.JPG'" onclick="goToSlide(4)" class="thumb-img w-[50px] h-[65px] object-cover cursor-pointer opacity-60 transition-all" data-idx="4">
+                    <img src="public/gallery_06.jpg" onerror="this.src='public/gallery_06.JPG'" onclick="goToSlide(5)" class="thumb-img w-[50px] h-[65px] object-cover cursor-pointer opacity-60 transition-all" data-idx="5">
+                    <img src="public/gallery_07.jpg" onerror="this.src='public/gallery_07.JPG'" onclick="goToSlide(6)" class="thumb-img w-[50px] h-[65px] object-cover cursor-pointer opacity-60 transition-all" data-idx="6">
+                    <img src="public/gallery_08.jpg" onerror="this.src='public/gallery_08.JPG'" onclick="goToSlide(7)" class="thumb-img w-[50px] h-[65px] object-cover cursor-pointer opacity-60 transition-all" data-idx="7">
+                    <img src="public/gallery_09.jpg" onerror="this.src='public/gallery_09.JPG'" onclick="goToSlide(8)" class="thumb-img w-[50px] h-[65px] object-cover cursor-pointer opacity-60 transition-all" data-idx="8">
+                    <img src="public/gallery_10.jpg" onerror="this.src='public/gallery_10.JPG'" onclick="goToSlide(9)" class="thumb-img w-[50px] h-[65px] object-cover cursor-pointer opacity-60 transition-all" data-idx="9">
+                    <img src="public/gallery_11.jpg" onerror="this.src='public/gallery_11.JPG'" onclick="goToSlide(10)" class="thumb-img w-[50px] h-[65px] object-cover cursor-pointer opacity-60 transition-all" data-idx="10">
+                    <img src="public/gallery_12.jpg" onerror="this.src='public/gallery_12.JPG'" onclick="goToSlide(11)" class="thumb-img w-[50px] h-[65px] object-cover cursor-pointer opacity-60 transition-all" data-idx="11">
+                    <img src="public/gallery_13.jpg" onerror="this.src='public/gallery_13.JPG'" onclick="goToSlide(12)" class="thumb-img w-[50px] h-[65px] object-cover cursor-pointer opacity-60 transition-all" data-idx="12">
+                    <img src="public/gallery_14.jpg" onerror="this.src='public/gallery_14.JPG'" onclick="goToSlide(13)" class="thumb-img w-[50px] h-[65px] object-cover cursor-pointer opacity-60 transition-all" data-idx="13">
+                    <img src="public/gallery_15.jpg" onerror="this.src='public/gallery_15.JPG'" onclick="goToSlide(14)" class="thumb-img w-[50px] h-[65px] object-cover cursor-pointer opacity-60 transition-all" data-idx="14">
+                    <img src="public/gallery_16.jpg" onerror="this.src='public/gallery_16.JPG'" onclick="goToSlide(15)" class="thumb-img w-[50px] h-[65px] object-cover cursor-pointer opacity-60 transition-all" data-idx="15">
+                    <img src="public/gallery_17.jpg" onerror="this.src='public/gallery_17.JPG'" onclick="goToSlide(16)" class="thumb-img w-[50px] h-[65px] object-cover cursor-pointer opacity-60 transition-all" data-idx="16">
+                    <img src="public/gallery_18.jpg" onerror="this.src='public/gallery_18.JPG'" onclick="goToSlide(17)" class="thumb-img w-[50px] h-[65px] object-cover cursor-pointer opacity-60 transition-all" data-idx="17">
+                </div>
+            </div>
+        </section>
+        <section class="w-full py-16 px-6 bg-white border-t border-gray-50">
+            <h2 class="serif-font text-[40px] text-black font-normal mb-6 uppercase leading-none">
+                L65<br>HOTEL<br>WEDDING<br>CONVENTION
+            </h2>
+            
+            <div class="text-xs text-gray-800 space-y-5 font-normal leading-relaxed">
+                <div>
+                    <p class="font-bold text-[14px] text-black mb-1">L65호텔웨딩컨벤션</p>
+                    <p class="text-gray-500">서울 동대문구 왕산로 200 청량리역 롯데캐슬스카이-L65 타워동 6층 02-2184-4500</p>
+                </div>
+                <div>
+                    <p class="font-bold text-black mb-0.5">자가용 이용 시</p>
+                    <p class="text-gray-500">컨벤션 내 주차장 이용 가능 (2시간 무료)</p>
+                </div>
+                <div>
+                    <p class="font-bold text-black mb-0.5">대중교통 이용 시</p>
+                    <p class="text-gray-500">지하철 1호선 청량리역 5번출구 바로 앞</p>
+                </div>
+            </div>
+
+
+            <div class="w-full mt-6">
+                <div id="map" class="w-full h-[240px] border border-gray-100 rounded-sm">
+                    <img src="public/maps.png" class="w-full h-full object-cover cursor-pointer opacity-60 transition-all" data-idx="17">
+                    
+                </div>
+            </div>
+        </section>
+
+<div class="w-full py-4 bg-black overflow-hidden flex select-none">
+            <div class="animate-marquee text-white text-[12px] font-medium tracking-widest uppercase flex items-center space-x-8 whitespace-nowrap">
+                <span>✦ 2026년 10월 5일 월요일 오후 4시</span>
+                <span>✦ 2026년 10월 5일 월요일 오후 4시</span>
+                <span>✦ 2026년 10월 5일 월요일 오후 4시</span>
+                <span>✦ 2026년 10월 5일 월요일 오후 4시</span>
+            </div>
+            <div class="animate-marquee text-white text-[12px] font-medium tracking-widest uppercase flex items-center space-x-8 whitespace-nowrap" aria-hidden="true">
+                <span>✦ 2026년 10월 5일 월요일 오후 4시</span>
+                <span>✦ 2026년 10월 5일 월요일 오후 4시</span>
+                <span>✦ 2026년 10월 5일 월요일 오후 4시</span>
+                <span>✦ 2026년 10월 5일 월요일 오후 4시</span>
+            </div>
+        </div>
+<!-- [2-2. 방명록 섹션] 로그인 없이 작성 및 실시간 조회 가능 -->
+        <section class="w-full py-16 px-6 bg-white border-t border-gray-50 flex flex-col">
+            <h2 class="serif-font text-[42px] text-black font-normal mb-8 text-left">GUEST<br>BOOK</h2>
+            <p class="text-xs text-gray-500 mb-6 font-light leading-relaxed">신랑 신부에게 따뜻한 축하의 한마디를 남겨주세요..♡</p>
+
+            <!-- ✍️ 방명록 작성 폼 영역 -->
+            <div class="w-full border-t border-black pt-6 mb-8">
+                <div class="space-y-3">
+                    <div class="flex space-x-2">
+                        <input type="text" id="gb-name" placeholder="이름" class="w-1/2 px-3 py-2 text-xs border border-gray-200 rounded-none focus:outline-none focus:border-black">
+                        <input type="password" id="gb-pw" placeholder="비밀번호" class="w-1/2 px-3 py-2 text-xs border border-gray-200 rounded-none focus:outline-none focus:border-black">
+                    </div>
+                    <textarea id="gb-content" rows="3" placeholder="축하 메시지를 작성해주세요." class="w-full px-3 py-2 text-xs border border-gray-200 rounded-none focus:outline-none focus:border-black resize-none"></textarea>
+                    <button onclick="addGuestbookMessage()" class="w-full bg-black text-white text-xs font-medium py-3 rounded-none tracking-wide hover:bg-gray-900 transition-colors">방명록 등록하기</button>
+                </div>
+            </div>
+
+            <!-- 💬 등록된 방명록 메시지 리스트 노출 영역 -->
+            <div id="guestbook-list" class="w-full space-y-4 max-h-[400px] overflow-y-auto pr-1">
+                <!-- 여기에 작성된 방명록이 실시간으로 생성되어 꽂힙니다 -->
+                <div class="text-center py-8 text-xs text-gray-400 font-light" id="gb-empty-msg">첫 번째 축하 메시지를 남겨보세요!</div>
+            </div>
+        </section>
+
+        <!-- ⚙️ 파이어베이스 데이터베이스 구동을 위한 SDK 로드 (body 종료 태그 직전에 넣어도 됩니다) -->
+        <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+        <section class="w-full py-16 px-6 bg-white flex flex-col">
+            <h2 class="serif-font text-[40px] text-black font-normal mb-8 leading-[0.95]">
+                GIFT<br>FOR<br>WEDDING<br>CEREMONY
+            </h2>
+            
+            <div class="w-full border-t border-black">
+                <div class="border-b border-gray-200">
+                    <button onclick="toggleAccordion('groom-box')" class="w-full py-5 text-left text-[14px] font-normal text-black flex justify-between items-center px-1">
+                        <span>신랑측 계좌번호</span>
+                        <svg id="groom-box-arrow" class="w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="groom-box" class="hidden pb-5 px-3 bg-gray-50/50 p-4 rounded-sm space-y-3">
+                        <div class="flex justify-between items-center text-xs">
+                            <div>
+                                <p class="font-bold text-gray-900 mb-0.5">박대승</p>
+                                <p class="text-gray-600">국민은행 123456-02-123456</p>
+                            </div>
+                            <button onclick="copyText('123456-02-123456')" class="bg-gray-200 px-3 py-1.5 rounded text-[11px] font-medium text-gray-700">복사</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200">
+                    <button onclick="toggleAccordion('bride-box')" class="w-full py-5 text-left text-[14px] font-normal text-black flex justify-between items-center px-1">
+                        <span>신부측 계좌번호</span>
+                        <svg id="bride-box-arrow" class="w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="bride-box" class="hidden pb-5 px-3 bg-gray-50/50 p-4 rounded-sm space-y-3">
+                        <div class="flex justify-between items-center text-xs">
+                            <div>
+                                <p class="font-bold text-gray-900 mb-0.5">박서우</p>
+                                <p class="text-gray-600">우리은행 1002560559559</p>
+                            </div>
+                            <button onclick="copyText('1002560559559')" class="bg-gray-200 px-3 py-1.5 rounded text-[11px] font-medium text-gray-700">복사</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="w-full py-16 bg-black flex flex-col items-center px-8 text-center text-white">
+            <h3 class="serif-font text-[32px] font-normal mb-2 tracking-wide uppercase">THANK YOU</h3>
+            <p class="text-xs text-gray-400 font-light mb-10">즐거운 날 함께해 주시면 감사하겠습니다</p>
+            
+            <div class="w-full space-y-3 max-w-[280px]">
+                <button onclick="alert('카카오톡 공유 API를 연결하세요.')" class="w-full bg-white text-black text-xs font-medium py-3.5 flex justify-between items-center px-5 rounded-none tracking-wide">
+                    <span>카카오톡 공유하기</span>
+                    <span>↗</span>
+                </button>
+                <button onclick="copyLink()" class="w-full bg-transparent text-white border border-white/30 text-xs font-medium py-3.5 flex justify-between items-center px-5 rounded-none tracking-wide">
+                    <span>링크 복사하기</span>
+                    <span>↗</span>
+                </button>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+
+
+        // 2. 아코디언 토글
+        function toggleAccordion(id) {
+            const box = document.getElementById(id);
+            const arrow = document.getElementById(id + '-arrow');
+            if(box.classList.contains('hidden')) {
+                box.classList.remove('hidden');
+                arrow.classList.add('rotate-180');
+            } else {
+                box.classList.add('hidden');
+                arrow.classList.remove('rotate-180');
+            }
+        }
+
+        // 3. 클립보드 복사
+        function copyText(val) {
+            navigator.clipboard.writeText(val).then(() => alert('계좌번호가 복사되었습니다.'));
+        }
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => alert('청첩장 링크가 복사되었습니다.'));
+        }
+
+        // 4. Swiper 슬라이더 연동 제어 엔진
+        const totalSlides = 18;
+        let swiper;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // 브라우저가 라이브러리를 안전하게 읽은 직후 Swiper 활성화
+            swiper = new Swiper('.mainSwiper', {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: false,
+                speed: 300,
+                observer: true,
+                observeParents: true,
+                simulateTouch: true,
+                grabCursor: true,
+                touchRatio: 1,
+                on: {
+                    slideChange: function () {
+                        const activeIndex = this.activeIndex;
+                        
+                        // 프로그레스 바 동기화
+                        const percentage = ((activeIndex + 1) / totalSlides) * 100;
+                        document.getElementById('galleryProgressBar').style.width = percentage + '%';
+                        
+                        // 하단 썸네일 불빛(하이라이트) 교체 및 스크롤 자동 추적
+                        const thumbs = document.querySelectorAll('.thumb-img');
+                        thumbs.forEach((thumb) => {
+                            const idx = parseInt(thumb.getAttribute('data-idx'));
+                            if (idx === activeIndex) {
+                                thumb.classList.remove('opacity-60');
+                                thumb.classList.add('opacity-100', 'border', 'border-black');
+                                thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                            } else {
+                                thumb.classList.remove('opacity-100', 'border', 'border-black');
+                                thumb.classList.add('opacity-60');
+                            }
+                        });
+                    }
+                }
+            });
+        });
+
+        // 하단 썸네일 클릭 시 호출되는 슬라이드 이동 함수
+        function goToSlide(index) {
+            if (swiper) swiper.slideTo(index);
+        }
+        // 6. 파이어베이스 실시간 DB 연동 및 비밀번호 삭제 완벽 호환 스크립트
+        (function() {
+            import('https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js').then((firebaseApp) => {
+                import('https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js').then((firebaseDatabase) => {
+                    
+                    const firebaseConfig = {
+                        apiKey: "AIzaSyAZgXwCD2QS_GNX-6g_9wvNWpVyAteeLQQ",
+                        authDomain: "weddingcard-d8ed2.firebaseapp.com",
+                        databaseURL: "https://weddingcard-d8ed2-default-rtdb.asia-southeast1.firebasedatabase.app", 
+                        projectId: "weddingcard-d8ed2",
+                        storageBucket: "weddingcard-d8ed2.firebasestorage.app",
+                        messagingSenderId: "821945501060",
+                        appId: "1:821945501060:web:d7dcab67d88373c5f409d1"
+                    };
+
+                    const app = firebaseApp.initializeApp(firebaseConfig);
+                    const db = firebaseDatabase.getDatabase(app);
+
+                    // 💬 [A] 실시간 데이터베이스 감시 및 리스트 출력 로직
+                    const dbRef = firebaseDatabase.ref(db, 'guestbook');
+                    firebaseDatabase.onValue(dbRef, (snapshot) => {
+                        const guestbookList = document.getElementById('guestbook-list');
+                        if (!guestbookList) return;
+                        guestbookList.innerHTML = '';
+                        
+                        const data = snapshot.val();
+                        if (!data) {
+                            guestbookList.innerHTML = '<div class="text-center py-8 text-xs text-gray-400 font-light">첫 번째 축하 메시지를 남겨보세요!</div>';
+                            return;
+                        }
+
+                        // 최신순 정렬 후 화면 렌더링
+                        const keys = Object.keys(data).reverse();
+                        keys.forEach((key) => {
+                            const item = data[key];
+                            const msgBox = document.createElement('div');
+                            msgBox.className = 'w-full bg-gray-50 p-4 border border-gray-100 relative text-left';
+                            
+                            // 💡 버튼 생성 시 파이어베이스 고유 ID(key)와 작성자가 쓴 비밀번호(item.pw)를 삭제 함수에 안전하게 던져줍니다.
+                            msgBox.innerHTML = `
+                                <div class="flex justify-between items-center mb-1.5">
+                                    <span class="font-bold text-xs text-gray-900">${item.name}</span>
+                                    <div class="flex items-center space-x-2" >
+                                        <span class="text-[10px] text-gray-400 font-light">${item.date}</span>
+                                        <button onclick="window.deleteGuestbookMessage('${key}', '${item.pw}')" class=" text-[10px] text-gray-300 hover:text-red-500 font-light transition-colors">삭제</button>
+
+                                    </div>
+
+                                </div>
+                                <p class="text-xs text-gray-700 font-light whitespace-pre-wrap leading-relaxed pr-8">${item.content}</p>
+                            `;
+                            guestbookList.appendChild(msgBox);
+                        });
+                    });
+
+                    // ✍️ [B] 방명록 등록하기 함수
+                    window.addGuestbookMessage = function() {
+                        const name = document.getElementById('gb-name').value.trim();
+                        const pw = document.getElementById('gb-pw').value.trim();
+                        const content = document.getElementById('gb-content').value.trim();
+
+                        if (!name || !pw || !content) {
+                            alert('이름, 비밀번호, 축하 메시지를 모두 입력해주세요!');
+                            return;
+                        }
+
+                        const today = new Date();
+                        const dateStr = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}`;
+
+                        const newPostRef = firebaseDatabase.push(firebaseDatabase.ref(db, 'guestbook'));
+                        firebaseDatabase.set(newPostRef, {
+                            name: name,
+                            pw: pw,
+                            content: content,
+                            date: dateStr
+                        }).then(() => {
+                            document.getElementById('gb-name').value = '';
+                            document.getElementById('gb-pw').value = '';
+                            document.getElementById('gb-content').value = '';
+                        }).catch((err) => {
+                            alert('데이터 저장 실패.');
+                        });
+                    };
+
+                    // 🔒 [C] ⭐️ 비밀번호 일치 시에만 데이터를 삭제하는 본인 확인 로직
+                    window.deleteGuestbookMessage = function(key, correctPw) {
+                        // 하객에게 비밀번호 입력을 요구하는 팝업창을 띄웁니다.
+                        const inputPw = prompt('방명록 작성 시 입력했던 비밀번호를 입력해주세요:');
+                        if (inputPw === null) return; // 취소 버튼을 누르면 중단
+
+                        // 입력한 비밀번호와 DB에 들어있는 정답 비밀번호를 철저하게 비교합니다.
+                        if (inputPw === correctPw) {
+                            if (confirm('정말 이 축하 메시지를 삭제하시겠습니까?')) {
+                                const targetRef = firebaseDatabase.ref(db, 'guestbook/' + key);
+                                firebaseDatabase.remove(targetRef)
+                                    .then(() => alert('삭제되었습니다.'))
+                                    .catch(() => alert('삭제 중 오류가 발생했습니다.'));
+                            }
+                        } else {
+                            alert('비밀번호가 일치하지 않습니다! 본인이 작성한 글만 삭제할 수 있습니다.');
+                        }
+                    };
+
+                });
+            });
+        })();
+    </script>
+    
+</body>
+</html>
