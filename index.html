@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=YOUR_CLIENT_ID_HERE"></script>
-
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" integrity="sha384-TiCUE00h649CAMonG018J2FOGLYHxaRNAqbMFI80Ji66EN6QlnJOpdS1LJIC2Uzu" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -310,7 +310,7 @@
             <p class="text-xs text-gray-400 font-light mb-10">즐거운 날 함께해 주시면 감사하겠습니다</p>
             
             <div class="w-full space-y-3 max-w-[280px]">
-                <button onclick="alert('카카오톡 공유 API를 연결하세요.')" class="w-full bg-white text-black text-xs font-medium py-3.5 flex justify-between items-center px-5 rounded-none tracking-wide">
+                <button onclick="shareKakao()" class="w-full bg-white text-black text-xs font-medium py-3.5 flex justify-between items-center px-5 rounded-none tracking-wide">
                     <span>카카오톡 공유하기</span>
                     <span>↗</span>
                 </button>
@@ -324,7 +324,34 @@
     </div>
 
     <script>
+// 카카오 API 키 초기화
+if (!Kakao.isInitialized()) {
+    Kakao.init('c21e2b2b9c783f475207a25a1339a763'); 
+}
 
+function shareKakao() {
+    Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+            title: '대승 ＆ 서우 결혼합니다 💍', // 카톡에 뜰 제목
+            description: '소중한 분들을 초대합니다. 자리에 함께하시어 축복해 주세요.', // 설명
+            imageUrl: 'https://wedding-card-zzaru.vercel.app/images/main.jpg', // 카톡 썸네일로 쓸 메인 이미지 주소
+            link: {
+                mobileWebUrl: 'https://wedding-card-zzaru.vercel.app',
+                webUrl: 'https://wedding-card-zzaru.vercel.app',
+            },
+        },
+        buttons: [
+            {
+                title: '모바일 청첩장 보기',
+                link: {
+                    mobileWebUrl: 'https://wedding-card-zzaru.vercel.app',
+                    webUrl: 'https://wedding-card-zzaru.vercel.app',
+                },
+            },
+        ],
+    });
+}
 
         // 2. 아코디언 토글
         function toggleAccordion(id) {
