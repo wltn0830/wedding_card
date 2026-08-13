@@ -8,6 +8,9 @@
     <meta property="og:type" content="website" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THE WEDDING OF DAESEUNG AND SEOWOO</title>
+
+    <!-- 🚀 메인 이미지 최우선 미리 로드 (로딩 버벅임 해결) -->
+    <link rel="preload" as="image" href="public/main_00.jpg" fetchpriority="high">
     
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -18,7 +21,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-<style>
+    <style>
         body {
             font-family: 'Noto Sans KR', sans-serif;
             background-color: #f3f4f6;
@@ -91,11 +94,11 @@
             will-change: opacity;
         }
 
-        /* --- 좌측 관통 ➡️ 하트 ➡️ 우측 관통 드로잉 애니메이션 --- */
+        /* --- 손그림 느낌 하트 SVG 드로잉 및 양방향 리셋 애니메이션 --- */
         .heart-path {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            transition: stroke-dashoffset 2.2s cubic-bezier(0.4, 0, 0.2, 1);
+            stroke-dasharray: 1200;
+            stroke-dashoffset: 1200;
+            transition: stroke-dashoffset 2.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .heart-svg-box.draw-active .heart-path {
             stroke-dashoffset: 0;
@@ -147,19 +150,19 @@
                 <p><span class="font-bold text-[1rem] leading-[1.2]">박영대 · 김시윤</span> 의 딸 <span class="font-bold text-[1.2rem] leading-[1.2] text-black">서우</span></p>
             </div>
             
-<!-- 초대 글귀 (왼쪽 화면 밖 시작 ➡️ 하트 ➡️ 오른쪽 화면 밖 빠짐) -->
-            <div class="w-full relative mb-12 flex justify-center items-center px-6">
-                <!-- 한 붓 그리기 하트 SVG 레이어 -->
+<!-- 초대 글귀 (요청하신 손그림 느낌 하트 선이 양끝으로 감싸는 영역) -->
+            <div class="w-full relative mb-12 flex justify-center items-center">
+                <!-- 손그림 스타일 꼬리 하트 SVG -->
                 <div id="heartSvgBox" class="heart-svg-box absolute inset-0 pointer-events-none flex justify-center items-center z-0 overflow-visible">
-                    <svg class="w-[390px] h-[220px]" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                        <!-- C: 좌측 바깥(-15) 진입 -> 중앙 하트 드로잉 -> 우측 바깥(215) 퇴장 -->
+                    <svg class="w-full h-[220px]" viewBox="0 0 390 180" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                        <!-- M 0,140 (좌측 끝) -> 루프 하트 -> M 390,140 (우측 끝) -->
                         <path class="heart-path" 
-                              d="M -15,110 C 20,105 45,95 70,80 C 40,55 30,25 55,10 C 75,-2 95,15 100,28 C 105,15 125,-2 145,10 C 170,25 160,55 130,80 C 110,95 100,105 100,105 C 100,105 130,90 160,95 C 180,98 195,105 215,110" 
+                              d="M -5,145 C 50,142 110,135 155,120 C 130,90 120,50 150,28 C 175,12 205,30 200,55 C 195,75 170,85 160,70 C 150,55 170,25 200,28 C 225,30 235,65 200,105 C 180,125 155,140 195,140 C 250,140 320,142 395,145" 
                               stroke="#D4AF37" 
                               stroke-width="1.8" 
                               stroke-linecap="round" 
                               stroke-linejoin="round" 
-                              opacity="0.42"/>
+                              opacity="0.45"/>
                     </svg>
                 </div>
 
@@ -579,16 +582,15 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                        obs.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
 
-            const targets = document.querySelectorAll('.fade-element:not(.is-visible)');
+            const targets = document.querySelectorAll('.fade-element');
             targets.forEach(el => observer.observe(el));
         }
 
-        // --- 하트 드로잉 전용 스크롤 관찰 엔진 ---
+        // --- ⭐️ 양방향(위/아래) 스크롤 리셋 지원 하트 드로잉 엔진 ---
         function setupHeartDrawingObserver() {
             const heartBox = document.getElementById('heartSvgBox');
             if (!heartBox) return;
@@ -598,11 +600,14 @@
                 threshold: 0.2
             };
 
-            const observer = new IntersectionObserver((entries, obs) => {
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
+                        // 스크롤로 화면에 보이면 드로잉 시작!
                         entry.target.classList.add('draw-active');
-                        obs.unobserve(entry.target);
+                    } else {
+                        // 화면 밖으로 지나쳐 올라가거나 내려가면 드로잉 리셋!
+                        entry.target.classList.remove('draw-active');
                     }
                 });
             }, observerOptions);
