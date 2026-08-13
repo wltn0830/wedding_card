@@ -30,15 +30,8 @@
             letter-spacing: -0.01em;
             line-height: 0.95;
         }
-        
-        /* 스르륵 나타나는 페이드인 애니메이션 */
-        .fade-in-1 { animation: fadeEffect 1s ease-out forwards; opacity: 0; transform: translateY(20px); }
-        .fade-in-2 { animation: fadeEffect 1s ease-out 0.3s forwards; opacity: 0; transform: translateY(20px); }
 
-        @keyframes fadeEffect {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        /* 무한 텍스트 배너 */
         @keyframes marquee {
             0% { transform: translateX(0%); }
             100% { transform: translateX(-50%); }
@@ -49,9 +42,9 @@
             animation: marquee 20s linear infinite;
         }
 
-        /* RSVP 팝업 스르륵 애니메이션 */
+        /* 팝업 스르륵 트랜지션 */
         #rsvpModal {
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
         }
         #rsvpModal.modal-closed {
             opacity: 0;
@@ -64,13 +57,24 @@
             pointer-events: auto;
         }
         #rsvpModalContent {
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.4s ease-in-out;
         }
         #rsvpModal.modal-closed #rsvpModalContent {
-            transform: scale(0.95) translateY(10px);
+            transform: scale(0.92) translateY(15px);
         }
         #rsvpModal.modal-open #rsvpModalContent {
             transform: scale(1) translateY(0);
+        }
+
+        /* 스크롤 및 요소 페이드인 애니메이션 */
+        .fade-element {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-element.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -80,7 +84,7 @@
         
         <!-- 1. 메인 인트로 표지 섹션 -->
         <section class="w-full h-[100dvh] bg-white pt-10 pb-6 px-6 flex flex-col justify-between items-center text-center relative">
-            <div class="w-full flex-1 flex flex-col justify-center items-center max-h-[40%] min-h-[180px] fade-in-1">
+            <div id="introTitle" class="w-full flex-1 flex flex-col justify-center items-center max-h-[40%] min-h-[180px] fade-element">
                 <h1 class="serif-font text-[32px] min-[390px]:text-[40px] text-black font-normal tracking-wide uppercase mb-3">
                     대승 & 서우<br>WEDDING
                 </h1>
@@ -90,7 +94,7 @@
                 </div>
             </div>
             
-            <div class="w-full flex-[1.5] bg-gray-100 relative rounded-sm overflow-hidden flex items-center justify-center mb-4 max-h-[55%] fade-in-2">
+            <div id="introImage" class="w-full flex-[1.5] bg-gray-100 relative rounded-sm overflow-hidden flex items-center justify-center mb-4 max-h-[55%] fade-element" style="transition-delay: 0.2s;">
                 <img src="public/main_00.jpg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="w-full h-full object-cover">
                 <div class="hidden absolute inset-0 flex-col items-center justify-center text-gray-400 text-xs bg-gray-100 p-4">
                     <span>여기에 메인 사진이 들어갑니다</span>
@@ -229,37 +233,85 @@
             </div>
         </section>
 
-        <!-- 5. GIFT 섹션 -->
+        <!-- 5. GIFT 섹션 (전체 계좌 반영) -->
         <section class="w-full py-16 px-6 bg-white flex flex-col border-t border-gray-50">
-            <h2 class="serif-font text-[40px] text-black font-normal mb-8 leading-[0.95] text-left">
+            <h2 class="serif-font text-[40px] text-black font-normal mb-8 leading-[0.95] text-left fade-element">
                 GIFT<br>FOR<br>WEDDING<br>CEREMONY
             </h2>
             
-            <div class="w-full border-t border-black space-y-4 pt-4">
-                <div class="border border-gray-100 p-4 bg-gray-50/50 rounded-sm">
-                    <p class="font-bold text-xs text-black mb-3">신랑측 계좌번호</p>
-                    <div class="flex justify-between items-center text-xs">
-                        <div>
-                            <p class="font-bold text-gray-900 mb-0.5">박대승</p>
-                            <p class="text-gray-600">국민은행 123456-02-123456</p>
+            <div class="w-full border-t border-black space-y-6 pt-6">
+                <!-- 신랑측 계좌 그룹 -->
+                <div class="space-y-3 fade-element">
+                    <p class="font-bold text-xs text-black uppercase tracking-wider">신랑측 마음 전하실 곳</p>
+                    
+                    <div class="border border-gray-100 p-3.5 bg-gray-50/50 rounded-sm">
+                        <div class="flex justify-between items-center text-xs">
+                            <div>
+                                <p class="font-bold text-gray-900 mb-0.5">신랑 박대승</p>
+                                <p class="text-gray-600">신한은행 110-272-282924</p>
+                            </div>
+                            <button onclick="copyText('110-272-282924')" class="bg-gray-200 px-3 py-1.5 rounded text-[11px] font-medium text-gray-700 hover:bg-gray-300 transition-colors">복사</button>
                         </div>
-                        <button onclick="copyText('123456-02-123456')" class="bg-gray-200 px-3 py-1.5 rounded text-[11px] font-medium text-gray-700 hover:bg-gray-300 transition-colors">복사</button>
+                    </div>
+
+                    <div class="border border-gray-100 p-3.5 bg-gray-50/50 rounded-sm">
+                        <div class="flex justify-between items-center text-xs">
+                            <div>
+                                <p class="font-bold text-gray-900 mb-0.5">신랑 부 박종현</p>
+                                <p class="text-gray-600">하나은행 5209-1002-988407</p>
+                            </div>
+                            <button onclick="copyText('5209-1002-988407')" class="bg-gray-200 px-3 py-1.5 rounded text-[11px] font-medium text-gray-700 hover:bg-gray-300 transition-colors">복사</button>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-100 p-3.5 bg-gray-50/50 rounded-sm">
+                        <div class="flex justify-between items-center text-xs">
+                            <div>
+                                <p class="font-bold text-gray-900 mb-0.5">신랑 모 김경림</p>
+                                <p class="text-gray-600">농협 352-1479-1508-43</p>
+                            </div>
+                            <button onclick="copyText('352-1479-1508-43')" class="bg-gray-200 px-3 py-1.5 rounded text-[11px] font-medium text-gray-700 hover:bg-gray-300 transition-colors">복사</button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="border border-gray-100 p-4 bg-gray-50/50 rounded-sm">
-                    <p class="font-bold text-xs text-black mb-3">신부측 계좌번호</p>
-                    <div class="flex justify-between items-center text-xs">
-                        <div>
-                            <p class="font-bold text-gray-900 mb-0.5">박서우</p>
-                            <p class="text-gray-600">우리은행 1002560559559</p>
+                <!-- 신부측 계좌 그룹 -->
+                <div class="space-y-3 pt-2 fade-element">
+                    <p class="font-bold text-xs text-black uppercase tracking-wider">신부측 마음 전하실 곳</p>
+                    
+                    <div class="border border-gray-100 p-3.5 bg-gray-50/50 rounded-sm">
+                        <div class="flex justify-between items-center text-xs">
+                            <div>
+                                <p class="font-bold text-gray-900 mb-0.5">신부 박서우</p>
+                                <p class="text-gray-600">하나은행 391-911079-42507</p>
+                            </div>
+                            <button onclick="copyText('391-911079-42507')" class="bg-gray-200 px-3 py-1.5 rounded text-[11px] font-medium text-gray-700 hover:bg-gray-300 transition-colors">복사</button>
                         </div>
-                        <button onclick="copyText('1002560559559')" class="bg-gray-200 px-3 py-1.5 rounded text-[11px] font-medium text-gray-700 hover:bg-gray-300 transition-colors">복사</button>
+                    </div>
+
+                    <div class="border border-gray-100 p-3.5 bg-gray-50/50 rounded-sm">
+                        <div class="flex justify-between items-center text-xs">
+                            <div>
+                                <p class="font-bold text-gray-900 mb-0.5">신부 부 박영대</p>
+                                <p class="text-gray-600">농협 405-12-125697</p>
+                            </div>
+                            <button onclick="copyText('405-12-125697')" class="bg-gray-200 px-3 py-1.5 rounded text-[11px] font-medium text-gray-700 hover:bg-gray-300 transition-colors">복사</button>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-100 p-3.5 bg-gray-50/50 rounded-sm">
+                        <div class="flex justify-between items-center text-xs">
+                            <div>
+                                <p class="font-bold text-gray-900 mb-0.5">신부 모 김시윤</p>
+                                <p class="text-gray-600">농협 426-02-040461</p>
+                            </div>
+                            <button onclick="copyText('426-02-040461')" class="bg-gray-200 px-3 py-1.5 rounded text-[11px] font-medium text-gray-700 hover:bg-gray-300 transition-colors">복사</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="w-full mt-8 p-4 bg-gray-50 text-center border border-gray-100 rounded-sm">
+            <div class="w-full mt-8 p-4 bg-gray-50 text-center border border-gray-100 rounded-sm fade-element">
                 <p class="text-[12px] font-medium text-gray-800 mb-1">💐 축하 화환 안내</p>
                 <p class="text-[11px] text-gray-500 leading-relaxed">
                     정중히 화환은 사양합니다.<br>
@@ -267,7 +319,6 @@
                 </p>
             </div>
         </section>
-
         <!-- 푸터 -->
         <footer class="w-full py-16 bg-black flex flex-col items-center px-8 text-center text-white">
             <h3 class="serif-font text-[32px] font-normal mb-2 tracking-wide uppercase">THANK YOU</h3>
