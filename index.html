@@ -21,7 +21,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
+<style>
         body {
             font-family: 'Noto Sans KR', sans-serif;
             background-color: #f3f4f6;
@@ -94,11 +94,11 @@
             will-change: opacity;
         }
 
-        /* --- 손그림 느낌 하트 SVG 드로잉 및 양방향 리셋 애니메이션 --- */
+        /* --- ⭐️ 원하시는 순서대로 그려지는 하트 SVG 애니메이션 --- */
         .heart-path {
-            stroke-dasharray: 1200;
-            stroke-dashoffset: 1200;
-            transition: stroke-dashoffset 2.4s cubic-bezier(0.4, 0, 0.2, 1);
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            transition: stroke-dashoffset 2.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .heart-svg-box.draw-active .heart-path {
             stroke-dashoffset: 0;
@@ -150,14 +150,12 @@
                 <p><span class="font-bold text-[1rem] leading-[1.2]">박영대 · 김시윤</span> 의 딸 <span class="font-bold text-[1.2rem] leading-[1.2] text-black">서우</span></p>
             </div>
             
-<!-- 초대 글귀 (요청하신 손그림 느낌 하트 선이 양끝으로 감싸는 영역) -->
-            <div class="w-full relative mb-12 flex justify-center items-center">
-                <!-- 손그림 스타일 꼬리 하트 SVG -->
+<!-- 초대 글귀 (요청하신 순서: 좌측 밑 시작 -> 오른쪽 하트볼 -> 돼지꼬리 -> 왼쪽 하트볼 -> X자 교차 -> 우측 밑 퇴장) -->
+            <div class="w-full relative mb-12 flex justify-center items-center px-6">
                 <div id="heartSvgBox" class="heart-svg-box absolute inset-0 pointer-events-none flex justify-center items-center z-0 overflow-visible">
                     <svg class="w-full h-[220px]" viewBox="0 0 390 180" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                        <!-- M 0,140 (좌측 끝) -> 루프 하트 -> M 390,140 (우측 끝) -->
                         <path class="heart-path" 
-                              d="M -5,145 C 50,142 110,135 155,120 C 130,90 120,50 150,28 C 175,12 205,30 200,55 C 195,75 170,85 160,70 C 150,55 170,25 200,28 C 225,30 235,65 200,105 C 180,125 155,140 195,140 C 250,140 320,142 395,145" 
+                              d="M -10,150 C 60,148 135,130 178,105 C 220,55 255,18 228,15 C 205,12 188,38 200,52 C 210,62 225,48 205,25 C 185,8 142,22 148,68 C 158,102 185,122 215,138 C 275,144 335,148 400,150" 
                               stroke="#D4AF37" 
                               stroke-width="1.8" 
                               stroke-linecap="round" 
@@ -167,9 +165,9 @@
                 </div>
 
                 <div class="text-[14px] text-gray-700 font-light leading-relaxed space-y-4 text-center fade-element z-10 relative">
-                    <p>사랑이라는 이름 아래,<br>저희 두 사람이 새로운 시작을 맞이합니다.</p>
-                    <p>가장 행복한 순간을 소중한 인연들과<br>함께 나누고 싶습니다.</p>
-                    <p>저희의 첫걸음에 함께해 주신다면<br>더 없는 기쁨으로 오래도록 간직하겠습니다.</p>
+                    <p>서로가 서로에게 머무를 곳이 되어<Br>이제 하나가 되려 합니다.</p>
+                    <p>소중한 분들을 모시고 <br>그 첫걸음을 함께하고자 합니다.</p>
+                    <p>귀한 걸음으로 함께해 주시면 감사하겠습니다.</p>
                 </div>
             </div>
 
@@ -590,7 +588,7 @@
             targets.forEach(el => observer.observe(el));
         }
 
-        // --- ⭐️ 양방향(위/아래) 스크롤 리셋 지원 하트 드로잉 엔진 ---
+        // --- 스크롤 양방향 하트 드로잉 엔진 ---
         function setupHeartDrawingObserver() {
             const heartBox = document.getElementById('heartSvgBox');
             if (!heartBox) return;
@@ -603,10 +601,8 @@
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // 스크롤로 화면에 보이면 드로잉 시작!
                         entry.target.classList.add('draw-active');
                     } else {
-                        // 화면 밖으로 지나쳐 올라가거나 내려가면 드로잉 리셋!
                         entry.target.classList.remove('draw-active');
                     }
                 });
