@@ -109,7 +109,7 @@
         <!-- 2. 신랑신부 초대글 섹션 -->
         <section class="w-full py-16 px-6 bg-white border-t border-gray-50 flex flex-col items-center text-center">
             <!-- 혼주 정보 -->
-            <div class="w-full pt-8 border-t border-gray-100 text-xs text-gray-800 space-y-2 text-center">
+            <div class="w-full pt-8  border-gray-100 text-xs text-gray-800 space-y-2 text-center mb-12">
                 <p><span class="font-bold text-sm">박종현 · 김경림</span> 의 아들 <span class="font-bold text-sm text-black">대승</span></p>
                 <p><span class="font-bold text-sm">박영대 · 김시윤</span> 의 딸 <span class="font-bold text-sm text-black">서우</span></p>
             </div>
@@ -397,8 +397,9 @@
     <!-- 카카오 SDK 로드 -->
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
 
-    <!-- 스크립트 엔진 구동 -->
+    <!-- 스크립트 실행 -->
     <script>
+        // 카카오 공유
         function shareKakao() {
             if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
                 Kakao.init('c21e2b2b9c783f475207a25a1339a763'); 
@@ -427,6 +428,7 @@
             });
         }
 
+        // 복사 기능
         function copyText(val) {
             navigator.clipboard.writeText(val).then(() => alert('계좌번호가 복사되었습니다.'));
         }
@@ -434,6 +436,7 @@
             navigator.clipboard.writeText(window.location.href).then(() => alert('청첩장 링크가 복사되었습니다.'));
         }
 
+        // Swiper 슬라이더
         const totalSlides = 11;
         let swiper;
 
@@ -469,13 +472,46 @@
                     }
                 }
             });
+
+            // 스크롤 감시자 (Intersection Observer) 설정
+            setupScrollObserver();
         });
 
         function goToSlide(index) {
             if (swiper) swiper.slideTo(index);
         }
 
-        // --- 참석 여부(RSVP) 모달 제어 로직 ---
+        // --- 스크롤에 따른 페이드인 관찰 엔진 ---
+        function setupScrollObserver() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -50px 0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        obs.unobserve(entry.target); // 한 번 등장 후 지속 노출
+                    }
+                });
+            }, observerOptions);
+
+            // 관찰 대상 등록 (메인 인트로 제외한 이하 섹션 요소)
+            const targets = document.querySelectorAll('section .fade-element');
+            targets.forEach(el => observer.observe(el));
+        }
+
+        // 메인 인트로 수동 페이드인 트리거
+        function triggerIntroAnimation() {
+            setTimeout(() => {
+                document.getElementById('introTitle').classList.add('is-visible');
+                document.getElementById('introImage').classList.add('is-visible');
+            }, 100);
+        }
+
+        // --- 참석 여부(RSVP) 모달 및 체인 애니메이션 제어 ---
         let selectedRsvp = { side: '', attend: '', meal: '' };
 
         function openRsvpModal() {
@@ -488,6 +524,9 @@
             const modal = document.getElementById('rsvpModal');
             modal.classList.remove('modal-open');
             modal.classList.add('modal-closed');
+
+            // 팝업이 사라지면 메인 인트로 타이틀과 이미지가 순차 등장
+            triggerIntroAnimation();
         }
 
         function selectOption(category, value, btnElement) {
@@ -501,6 +540,7 @@
             btnElement.classList.add('bg-black', 'text-white', 'border-black');
         }
 
+        // 파이어베이스 DB 연결
         let firebaseDatabase;
         let firebaseDbInstance;
 
