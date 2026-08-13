@@ -13,58 +13,60 @@
         .serif-font { font-family: 'Cinzel', serif; }
     </style>
 </head>
-<body class="p-4 sm:p-8 min-h-screen text-gray-800">
+<body class="p-3 sm:p-8 min-h-screen text-gray-800">
 
-    <div class="max-w-4xl mx-auto bg-white p-6 sm:p-8 rounded-lg shadow-sm border border-gray-100">
+    <div class="max-w-4xl mx-auto bg-white p-4 sm:p-8 rounded-lg shadow-sm border border-gray-100">
         
-        <!-- 헤더 -->
-        <div class="border-b border-black pb-6 mb-6 flex justify-between items-end">
+        <!-- 모바일 대응 헤더 (flex-col / sm:flex-row) -->
+        <div class="border-b border-black pb-4 mb-5 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-3">
             <div>
-                <h1 class="serif-font text-2xl sm:text-3xl text-black font-semibold">RSVP MANAGEMENT</h1>
-                <p class="text-xs text-gray-500 mt-1">대승 ♡ 서우 모바일 청첩장 참석 여부 실시간 현황</p>
+                <h1 class="serif-font text-xl sm:text-3xl text-black font-semibold tracking-wide">RSVP MANAGEMENT</h1>
+                <p class="text-[11px] sm:text-xs text-gray-500 mt-1">대승 ♡ 서우 모바일 청첩장 참석 여부 실시간 현황</p>
             </div>
-            <button onclick="loadRsvpData()" class="bg-black text-white text-xs px-3 py-2 hover:bg-gray-800 transition-colors">🔄 새로고침</button>
+            <button onclick="loadRsvpData()" class="self-end sm:self-auto bg-black text-white text-[11px] sm:text-xs px-3 py-1.5 hover:bg-gray-800 transition-colors flex items-center gap-1">
+                <span>🔄</span> 새로고침
+            </button>
         </div>
 
-        <!-- 통계 요약 카이트 -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
-            <div class="bg-gray-50 p-4 border border-gray-100 rounded-sm text-center">
-                <p class="text-[11px] text-gray-500 mb-1">총 응답 수</p>
-                <p class="text-xl font-bold text-black" id="stat-total-responses">0건</p>
+        <!-- 통계 요약 카드 (2x2 그리드) -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-6">
+            <div class="bg-gray-50 p-3 sm:p-4 border border-gray-100 rounded-sm text-center">
+                <p class="text-[10px] sm:text-[11px] text-gray-500 mb-0.5">총 응답 수</p>
+                <p class="text-lg sm:text-xl font-bold text-black" id="stat-total-responses">0건</p>
             </div>
-            <div class="bg-gray-50 p-4 border border-gray-100 rounded-sm text-center">
-                <p class="text-[11px] text-gray-500 mb-1">총 참석 예상 인원</p>
-                <p class="text-xl font-bold text-black" id="stat-total-guests">0명</p>
+            <div class="bg-gray-50 p-3 sm:p-4 border border-gray-100 rounded-sm text-center">
+                <p class="text-[10px] sm:text-[11px] text-gray-500 mb-0.5">총 참석 예상 인원</p>
+                <p class="text-lg sm:text-xl font-bold text-black" id="stat-total-guests">0명</p>
             </div>
-            <div class="bg-gray-50 p-4 border border-gray-100 rounded-sm text-center">
-                <p class="text-[11px] text-gray-500 mb-1">신랑측 참석 인원</p>
-                <p class="text-xl font-bold text-blue-600" id="stat-groom-guests">0명</p>
+            <div class="bg-gray-50 p-3 sm:p-4 border border-gray-100 rounded-sm text-center">
+                <p class="text-[10px] sm:text-[11px] text-gray-500 mb-0.5">신랑측 참석 인원</p>
+                <p class="text-lg sm:text-xl font-bold text-blue-600" id="stat-groom-guests">0명</p>
             </div>
-            <div class="bg-gray-50 p-4 border border-gray-100 rounded-sm text-center">
-                <p class="text-[11px] text-gray-500 mb-1">신부측 참석 인원</p>
-                <p class="text-xl font-bold text-rose-600" id="stat-bride-guests">0명</p>
+            <div class="bg-gray-50 p-3 sm:p-4 border border-gray-100 rounded-sm text-center">
+                <p class="text-[10px] sm:text-[11px] text-gray-500 mb-0.5">신부측 참석 인원</p>
+                <p class="text-lg sm:text-xl font-bold text-rose-600" id="stat-bride-guests">0명</p>
             </div>
         </div>
 
         <!-- 필터 탭 -->
-        <div class="flex space-x-2 mb-4 text-xs">
-            <button onclick="filterData('all')" id="btn-filter-all" class="filter-btn px-4 py-2 border border-black bg-black text-white font-medium">전체보기</button>
-            <button onclick="filterData('신랑')" id="btn-filter-groom" class="filter-btn px-4 py-2 border border-gray-200 text-gray-600 hover:border-black">신랑측</button>
-            <button onclick="filterData('신부')" id="btn-filter-bride" class="filter-btn px-4 py-2 border border-gray-200 text-gray-600 hover:border-black">신부측</button>
+        <div class="flex space-x-1.5 mb-3 text-xs">
+            <button onclick="filterData('all')" id="btn-filter-all" class="filter-btn px-3 py-1.5 border border-black bg-black text-white font-medium">전체보기</button>
+            <button onclick="filterData('신랑')" id="btn-filter-groom" class="filter-btn px-3 py-1.5 border border-gray-200 text-gray-600 hover:border-black">신랑측</button>
+            <button onclick="filterData('신부')" id="btn-filter-bride" class="filter-btn px-3 py-1.5 border border-gray-200 text-gray-600 hover:border-black">신부측</button>
         </div>
 
-        <!-- 데이터 테이블 -->
-        <div class="overflow-x-auto border border-gray-100 rounded-sm">
-            <table class="w-full text-left text-xs">
+        <!-- 데이터 테이블 (가로 스크롤 및 텍스트 줄바꿈 방지 적용) -->
+        <div class="w-full overflow-x-auto border border-gray-100 rounded-sm">
+            <table class="w-full text-left text-xs whitespace-nowrap min-w-[500px]">
                 <thead class="bg-gray-50 border-b border-gray-200 text-gray-600 font-medium">
                     <tr>
-                        <th class="p-3">구분</th>
-                        <th class="p-3">성함</th>
-                        <th class="p-3">참석여부</th>
-                        <th class="p-3">식사여부</th>
-                        <th class="p-3">동행인(본인제외)</th>
-                        <th class="p-3">총 인원</th>
-                        <th class="p-3">제출일시</th>
+                        <th class="p-2.5">구분</th>
+                        <th class="p-2.5">성함</th>
+                        <th class="p-2.5">참석여부</th>
+                        <th class="p-2.5">식사여부</th>
+                        <th class="p-2.5">동행인</th>
+                        <th class="p-2.5">총 인원</th>
+                        <th class="p-2.5">제출일시</th>
                     </tr>
                 </thead>
                 <tbody id="rsvp-table-body" class="divide-y divide-gray-100">
@@ -114,7 +116,7 @@
                 rsvpRawData = Object.keys(data).map(key => ({
                     id: key,
                     ...data[key]
-                })).reverse(); // 최신순 정렬
+                })).reverse();
 
                 renderTable();
                 updateStats(rsvpRawData);
@@ -149,19 +151,19 @@
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-gray-50/80 transition-colors";
                 tr.innerHTML = `
-                    <td class="p-3">${sideBadge}</td>
-                    <td class="p-3 font-bold text-gray-900">${item.name}</td>
-                    <td class="p-3">${attendBadge}</td>
-                    <td class="p-3 text-gray-600">${item.meal || '-'}</td>
-                    <td class="p-3 text-gray-600">${item.guests || 0}명</td>
-                    <td class="p-3 font-bold text-black">${totalPeople > 0 ? totalPeople + '명' : '-'}</td>
-                    <td class="p-3 text-gray-400 text-[11px]">${item.date || '-'}</td>
+                    <td class="p-2.5">${sideBadge}</td>
+                    <td class="p-2.5 font-bold text-gray-900">${item.name}</td>
+                    <td class="p-2.5">${attendBadge}</td>
+                    <td class="p-2.5 text-gray-600">${item.meal || '-'}</td>
+                    <td class="p-2.5 text-gray-600">${item.guests || 0}명</td>
+                    <td class="p-2.5 font-bold text-black">${totalPeople > 0 ? totalPeople + '명' : '-'}</td>
+                    <td class="p-2.5 text-gray-400 text-[11px]">${item.date || '-'}</td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        // 통계 자동 계산
+        // 통계 계산
         function updateStats(data) {
             let totalResponses = data.length;
             let totalGuests = 0;
@@ -170,7 +172,7 @@
 
             data.forEach(item => {
                 if (item.attend === '참석') {
-                    const count = parseInt(item.guests || 0) + 1; // 본인 + 동행인
+                    const count = parseInt(item.guests || 0) + 1;
                     totalGuests += count;
                     if (item.side === '신랑') groomGuests += count;
                     if (item.side === '신부') brideGuests += count;
@@ -183,7 +185,7 @@
             document.getElementById('stat-bride-guests').innerText = brideGuests + '명';
         }
 
-        // 필터 변경
+        // 필터링
         window.filterData = function(type) {
             currentFilter = type;
             document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -198,7 +200,6 @@
             renderTable();
         };
 
-        // 초기 로드 실행
         loadRsvpData();
     </script>
 </body>
