@@ -91,11 +91,11 @@
             will-change: opacity;
         }
 
-        /* 고급스러운 하트 라인 드로잉 애니메이션 */
+        /* --- 좌측 관통 ➡️ 하트 ➡️ 우측 관통 드로잉 애니메이션 --- */
         .heart-path {
-            stroke-dasharray: 600;
-            stroke-dashoffset: 600;
-            transition: stroke-dashoffset 1.8s cubic-bezier(0.45, 0, 0.15, 1);
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            transition: stroke-dashoffset 2.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .heart-svg-box.draw-active .heart-path {
             stroke-dashoffset: 0;
@@ -132,7 +132,7 @@
                     </div>
                     
                     <!-- 통통 튀는 화살표 아이콘 -->
-                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-black rounded-full flex justify-center items-center shadow-md animate-bounce z-20">
+                    <div class="absolute bottom-4  -translate-x-1/2 w-8 h-8 bg-black rounded-full flex justify-center items-center shadow-md animate-bounce z-20">
                         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
                 </div>
@@ -147,18 +147,19 @@
                 <p><span class="font-bold text-[1rem] leading-[1.2]">박영대 · 김시윤</span> 의 딸 <span class="font-bold text-[1.2rem] leading-[1.2] text-black">서우</span></p>
             </div>
             
-<!-- 초대 글귀 (배경 뒤에 하트 드로잉 SVG 연출) -->
-            <div class="w-full relative mb-12 flex justify-center items-center">
-                <!-- 하트 라인 아트 SVG (글자 뒤 배경) -->
-                <div id="heartSvgBox" class="heart-svg-box absolute inset-0 pointer-events-none flex justify-center items-center z-0">
-                    <svg class="w-[260px] h-[190px]" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+<!-- 초대 글귀 (왼쪽 화면 밖 시작 ➡️ 하트 ➡️ 오른쪽 화면 밖 빠짐) -->
+            <div class="w-full relative mb-12 flex justify-center items-center px-6">
+                <!-- 한 붓 그리기 하트 SVG 레이어 -->
+                <div id="heartSvgBox" class="heart-svg-box absolute inset-0 pointer-events-none flex justify-center items-center z-0 overflow-visible">
+                    <svg class="w-[390px] h-[220px]" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                        <!-- C: 좌측 바깥(-15) 진입 -> 중앙 하트 드로잉 -> 우측 바깥(215) 퇴장 -->
                         <path class="heart-path" 
-                              d="M100 130 C30 90, 5 45, 45 18 C70 0, 95 20, 100 35 C105 20, 130 0, 155 18 C195 45, 170 90, 100 130 Z" 
+                              d="M -15,110 C 20,105 45,95 70,80 C 40,55 30,25 55,10 C 75,-2 95,15 100,28 C 105,15 125,-2 145,10 C 170,25 160,55 130,80 C 110,95 100,105 100,105 C 100,105 130,90 160,95 C 180,98 195,105 215,110" 
                               stroke="#D4AF37" 
                               stroke-width="1.8" 
                               stroke-linecap="round" 
                               stroke-linejoin="round" 
-                              opacity="0.38"/>
+                              opacity="0.42"/>
                     </svg>
                 </div>
 
@@ -560,7 +561,6 @@
                 frame.style.height = `${heightVh}vh`;
                 frame.style.borderRadius = `${borderRadius}px`;
 
-                // 스크롤 시 위쪽 은은한 오버레이 투명도도 비례해서 축소
                 if(overlay) {
                     overlay.style.opacity = `${1 - progress}`;
                 }
@@ -595,7 +595,7 @@
 
             const observerOptions = {
                 root: null,
-                threshold: 0.3
+                threshold: 0.2
             };
 
             const observer = new IntersectionObserver((entries, obs) => {
