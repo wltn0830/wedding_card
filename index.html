@@ -483,13 +483,31 @@
                 }
             });
 
-            // 스크롤 감시자 및 팝업 스크롤 트리거 가동
             setupScrollObserver();
             setupScrollRsvpTrigger();
+            setupImageScaleOnScroll();
         });
 
         function goToSlide(index) {
             if (swiper) swiper.slideTo(index);
+        }
+
+        // --- 메인 이미지 스크롤 축소(Scale) 연동 엔진 ---
+        function setupImageScaleOnScroll() {
+            const imgEl = document.getElementById('introImage');
+            window.addEventListener('scroll', function() {
+                const scrollY = window.scrollY;
+                const maxScroll = 200; // 스크롤 200px 구간 동안 효과 적용
+                
+                let progress = Math.min(scrollY / maxScroll, 1);
+                
+                // 1.18 배율에서 1.0(정사이즈)으로 감소
+                let scale = 1.18 - (0.18 * progress);
+                let borderRadius = progress * 4; // 모서리 곡률 살짝 추가
+
+                imgEl.style.transform = `scale(${scale})`;
+                imgEl.style.borderRadius = `${borderRadius}px`;
+            });
         }
 
         // --- 스크롤에 따른 페이드인 관찰 엔진 ---
@@ -504,21 +522,20 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                        obs.unobserve(entry.target); // 한 번 등장 후 지속 노출
+                        obs.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
 
-            // 관찰 대상 등록 (모든 fade-element 클래스 요소)
             const targets = document.querySelectorAll('.fade-element:not(.is-visible)');
             targets.forEach(el => observer.observe(el));
         }
 
-        // --- 스크롤 시 참석여부 팝업 자동 트리거 (최초 1회만) ---
+        // --- 스크롤 시 참석여부 팝업 자동 트리거 ---
         let hasTriggeredRsvp = false;
         function setupScrollRsvpTrigger() {
             window.addEventListener('scroll', function handleRsvpScroll() {
-                if (!hasTriggeredRsvp && window.scrollY > 150) {
+                if (!hasTriggeredRsvp && window.scrollY > 120) {
                     hasTriggeredRsvp = true;
                     openRsvpModal();
                     window.removeEventListener('scroll', handleRsvpScroll);
