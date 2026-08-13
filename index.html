@@ -96,7 +96,7 @@
 
 .heart-path {
     fill: none;
-    stroke: #D4AF37; /* 원하는 골드 색상 */
+    stroke: #000; /* 원하는 골드 색상 */
     stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -105,7 +105,12 @@
     stroke-dashoffset: 2000;
     transition: stroke-dashoffset 2.5s ease-out;
 }
-
+.heart-svg-box{
+    width: 150%;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -250px;
+}
 /* 스크롤로 해당 구역 진입 시 애니메이션 실행 */
 .heart-svg-box.draw-active .heart-path {
     stroke-dashoffset: 0;
