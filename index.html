@@ -614,7 +614,7 @@
         <!-- 4. GALLERY 섹션 -->
         <section class="w-full py-16 px-6 bg-white border-t border-gray-50">
             <h2 class="serif-font text-[50px] text-black font-normal mb-4 text-left fade-element">GALLERY</h2>
-            <div class="w-full flex flex-col items-center fade-element">
+            <div class="w-full flex flex-col items-center fade-element overflow-hidden">
                 <div class="swiper mainSwiper w-full bg-gray-50 overflow-hidden mb-4 relative" style="height: 480px;">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide w-full h-full flex-shrink-0"><img src="public/gallery_01.jpg" onerror="this.src='public/gallery_01.JPG'" class="w-full h-full object-cover pointer-events-none"></div>
@@ -867,6 +867,8 @@
                 slidesPerView: 1,
                 spaceBetween: 0,
                 loop: false,
+    resistance: true,           // 튕김 방지 활성화
+    resistanceRatio: 0,
                 speed: 300,
                 observer: true,
                 observeParents: true,
