@@ -31,8 +31,9 @@
             line-height: 0.95;
         }
         
-        .fade-in-1 { animation: fadeEffect 0.8s ease-out forwards; }
-        .fade-in-2 { animation: fadeEffect 0.8s ease-out 0.2s forwards; opacity: 0; }
+        /* 스르륵 나타나는 페이드인 애니메이션 */
+        .fade-in-1 { animation: fadeEffect 1s ease-out forwards; opacity: 0; transform: translateY(20px); }
+        .fade-in-2 { animation: fadeEffect 1s ease-out 0.3s forwards; opacity: 0; transform: translateY(20px); }
 
         @keyframes fadeEffect {
             to { opacity: 1; transform: translateY(0); }
@@ -47,6 +48,30 @@
             width: max-content;
             animation: marquee 20s linear infinite;
         }
+
+        /* RSVP 팝업 스르륵 애니메이션 */
+        #rsvpModal {
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        #rsvpModal.modal-closed {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #rsvpModal.modal-open {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        #rsvpModalContent {
+            transition: transform 0.3s ease-in-out;
+        }
+        #rsvpModal.modal-closed #rsvpModalContent {
+            transform: scale(0.95) translateY(10px);
+        }
+        #rsvpModal.modal-open #rsvpModalContent {
+            transform: scale(1) translateY(0);
+        }
     </style>
 </head>
 <body class="flex justify-center items-start min-h-screen">
@@ -54,8 +79,8 @@
     <div class="w-[390px] bg-white shadow-2xl flex flex-col relative overflow-hidden">
         
         <!-- 1. 메인 인트로 표지 섹션 -->
-        <section class="w-full h-[100dvh] bg-white pt-10 pb-6 px-6 flex flex-col justify-between items-center text-center fade-in-1 relative">
-            <div class="w-full flex-1 flex flex-col justify-center items-center max-h-[40%] min-h-[180px]">
+        <section class="w-full h-[100dvh] bg-white pt-10 pb-6 px-6 flex flex-col justify-between items-center text-center relative">
+            <div class="w-full flex-1 flex flex-col justify-center items-center max-h-[40%] min-h-[180px] fade-in-1">
                 <h1 class="serif-font text-[32px] min-[390px]:text-[40px] text-black font-normal tracking-wide uppercase mb-3">
                     대승 & 서우<br>WEDDING
                 </h1>
@@ -65,7 +90,7 @@
                 </div>
             </div>
             
-            <div class="w-full flex-[1.5] bg-gray-100 relative rounded-sm overflow-hidden flex items-center justify-center mb-4 max-h-[55%]">
+            <div class="w-full flex-[1.5] bg-gray-100 relative rounded-sm overflow-hidden flex items-center justify-center mb-4 max-h-[55%] fade-in-2">
                 <img src="public/main_00.jpg" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="w-full h-full object-cover">
                 <div class="hidden absolute inset-0 flex-col items-center justify-center text-gray-400 text-xs bg-gray-100 p-4">
                     <span>여기에 메인 사진이 들어갑니다</span>
@@ -77,28 +102,28 @@
             </div>
         </section>
 
-        <!-- 2. 신랑신부 초대글 섹션 (요청하신 디자인 반영) -->
-        <section class="w-full py-16 px-6 bg-white border-t border-gray-50 flex flex-col items-center text-center fade-in-2">
-            <h2 class="serif-font text-[40px] text-black font-normal mb-8 leading-[0.95]">
+        <!-- 2. 신랑신부 초대글 섹션 -->
+        <section class="w-full py-16 px-6 bg-white border-t border-gray-50 flex flex-col items-center text-center">
+            <h2 class="serif-font text-[40px] text-black font-normal mb-8 leading-[0.95] text-left w-full">
                 INVITATION
             </h2>
             
             <!-- 초대 글귀 -->
-            <div class="text-[13px] text-gray-700 font-light leading-relaxed space-y-4 mb-12">
+            <div class="text-[13px] text-gray-700 font-light leading-relaxed space-y-4 mb-12 text-center">
                 <p>사랑이라는 이름 아래,<br>저희 두 사람이 새로운 시작을 맞이합니다.</p>
                 <p>가장 행복한 순간을 소중한 인연들과<br>함께 나누고 싶습니다.</p>
                 <p>저희의 첫걸음에 함께해 주신다면<br>더 없는 기쁨으로 오래도록 간직하겠습니다.</p>
             </div>
 
             <!-- 혼주 정보 -->
-            <div class="w-full pt-8 border-t border-gray-100 text-xs text-gray-800 space-y-2">
+            <div class="w-full pt-8 border-t border-gray-100 text-xs text-gray-800 space-y-2 text-center">
                 <p><span class="font-bold text-sm">박종현 · 김경림</span> 의 아들 <span class="font-bold text-sm text-black">대승</span></p>
                 <p><span class="font-bold text-sm">박영대 · 김시윤</span> 의 딸 <span class="font-bold text-sm text-black">서우</span></p>
             </div>
 
-            <!-- 달력 영역 -->
+            <!-- 달력 영역 (요청하신 왼쪽 정렬 반영) -->
             <div class="w-full mt-16 pt-12 border-t border-gray-100">
-                <div class="serif-font text-[40px] text-black uppercase leading-[1.05] tracking-tight mb-8">
+                <div class="serif-font text-[40px] text-black uppercase leading-[1.05] tracking-tight mb-8 text-left">
                     2026.10.05<br>MONDAY<br>PM 4:00
                 </div>
 
@@ -122,9 +147,9 @@
             </div>
         </section>
 
-        <!-- 3. LOCATION (장소) 섹션 -->
+        <!-- 3. LOCATION 섹션 -->
         <section class="w-full py-16 px-6 bg-white border-t border-gray-50">
-            <h2 class="serif-font text-[40px] text-black font-normal mb-6 uppercase leading-none">
+            <h2 class="serif-font text-[40px] text-black font-normal mb-6 uppercase leading-none text-left">
                 LOCATION 
             </h2>
             
@@ -166,7 +191,7 @@
             </div>
         </div>
 
-        <!-- 4. GALLERY (갤러리) 섹션 -->
+        <!-- 4. GALLERY 섹션 -->
         <section class="w-full py-16 px-6 bg-white border-t border-gray-50">
             <h2 class="serif-font text-[50px] text-black font-normal mb-4 text-left">GALLERY</h2>
             <div class="w-full flex flex-col items-center">
@@ -206,14 +231,13 @@
             </div>
         </section>
 
-        <!-- 5. GIFT (계좌번호 상시 노출 & 화환 사절 안내) -->
+        <!-- 5. GIFT 섹션 -->
         <section class="w-full py-16 px-6 bg-white flex flex-col border-t border-gray-50">
-            <h2 class="serif-font text-[40px] text-black font-normal mb-8 leading-[0.95]">
+            <h2 class="serif-font text-[40px] text-black font-normal mb-8 leading-[0.95] text-left">
                 GIFT<br>FOR<br>WEDDING<br>CEREMONY
             </h2>
             
             <div class="w-full border-t border-black space-y-4 pt-4">
-                <!-- 신랑측 계좌 -->
                 <div class="border border-gray-100 p-4 bg-gray-50/50 rounded-sm">
                     <p class="font-bold text-xs text-black mb-3">신랑측 계좌번호</p>
                     <div class="flex justify-between items-center text-xs">
@@ -225,7 +249,6 @@
                     </div>
                 </div>
 
-                <!-- 신부측 계좌 -->
                 <div class="border border-gray-100 p-4 bg-gray-50/50 rounded-sm">
                     <p class="font-bold text-xs text-black mb-3">신부측 계좌번호</p>
                     <div class="flex justify-between items-center text-xs">
@@ -238,7 +261,6 @@
                 </div>
             </div>
 
-            <!-- 화환 사절 문구 -->
             <div class="w-full mt-8 p-4 bg-gray-50 text-center border border-gray-100 rounded-sm">
                 <p class="text-[12px] font-medium text-gray-800 mb-1">💐 축하 화환 안내</p>
                 <p class="text-[11px] text-gray-500 leading-relaxed">
@@ -271,18 +293,15 @@
 
     </div>
 
-    <!-- 6. 참석 여부 전달 모달 팝업 (디자인 원본 감성 반영) -->
-    <div id="rsvpModal" class="fixed inset-0 bg-black/60 z-50 flex justify-center items-center p-4">
-        <div class="w-[360px] max-h-[90vh] bg-white rounded-md shadow-2xl flex flex-col overflow-hidden">
-            <!-- 팝업 헤더 -->
+    <!-- 6. 참석 여부 전달 모달 팝업 (스르륵 트랜지션 적용) -->
+    <div id="rsvpModal" class="fixed inset-0 bg-black/60 z-50 flex justify-center items-center p-4 modal-open">
+        <div id="rsvpModalContent" class="w-[360px] max-h-[90vh] bg-white rounded-md shadow-2xl flex flex-col overflow-hidden">
             <div class="flex justify-between items-center px-5 py-4 border-b border-gray-100">
                 <h3 class="text-sm font-bold text-gray-900">참석 여부 전달</h3>
                 <button onclick="closeRsvpModal()" class="text-gray-400 hover:text-black text-lg font-light">✕</button>
             </div>
 
-            <!-- 팝업 폼 내용 (스크롤 가능) -->
             <div class="p-5 overflow-y-auto space-y-5 text-xs text-gray-800">
-                <!-- 어느 측 하객 -->
                 <div>
                     <label class="block font-medium mb-2 text-gray-700">어느 측 하객이신가요? <span class="text-red-500">*</span></label>
                     <div class="grid grid-cols-2 gap-2">
@@ -291,7 +310,6 @@
                     </div>
                 </div>
 
-                <!-- 참석여부 -->
                 <div>
                     <label class="block font-medium mb-2 text-gray-700">참석여부 <span class="text-red-500">*</span></label>
                     <div class="grid grid-cols-2 gap-2">
@@ -300,7 +318,6 @@
                     </div>
                 </div>
 
-                <!-- 식사여부 -->
                 <div>
                     <label class="block font-medium mb-2 text-gray-700">식사여부 <span class="text-red-500">*</span></label>
                     <div class="grid grid-cols-3 gap-2">
@@ -310,20 +327,17 @@
                     </div>
                 </div>
 
-                <!-- 성함 -->
                 <div>
                     <label class="block font-medium mb-1 text-gray-700">성함 <span class="text-red-500">*</span></label>
                     <input type="text" id="rsvp-name" placeholder="성함을 입력해주세요" class="w-full px-3 py-2.5 border border-gray-200 rounded-none focus:outline-none focus:border-black">
                 </div>
 
-                <!-- 동행인 수 -->
                 <div>
                     <label class="block font-medium mb-1 text-gray-700">동행인 수 (본인 제외)</label>
                     <input type="number" id="rsvp-guests" min="0" placeholder="0" value="0" class="w-full px-3 py-2.5 border border-gray-200 rounded-none focus:outline-none focus:border-black">
                 </div>
             </div>
 
-            <!-- 팝업 하단 버튼 -->
             <div class="p-4 border-t border-gray-100 flex space-x-2">
                 <button onclick="closeRsvpModal()" class="w-1/3 border border-gray-300 py-3 text-xs font-medium text-gray-600 hover:bg-gray-50">다음에 하기</button>
                 <button onclick="submitRsvp()" class="w-2/3 bg-black text-white py-3 text-xs font-medium tracking-wider hover:bg-gray-900">전달하기</button>
@@ -336,7 +350,6 @@
 
     <!-- 스크립트 엔진 구동 -->
     <script>
-        // 카카오톡 공유하기
         function shareKakao() {
             if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
                 Kakao.init('c21e2b2b9c783f475207a25a1339a763'); 
@@ -365,7 +378,6 @@
             });
         }
 
-        // 클립보드 복사
         function copyText(val) {
             navigator.clipboard.writeText(val).then(() => alert('계좌번호가 복사되었습니다.'));
         }
@@ -373,7 +385,6 @@
             navigator.clipboard.writeText(window.location.href).then(() => alert('청첩장 링크가 복사되었습니다.'));
         }
 
-        // Swiper 슬라이더
         const totalSlides = 11;
         let swiper;
 
@@ -415,15 +426,19 @@
             if (swiper) swiper.slideTo(index);
         }
 
-        // --- 참석 여부(RSVP) 모달 및 데이터베이스 연동 로직 ---
+        // --- 참석 여부(RSVP) 모달 제어 로직 ---
         let selectedRsvp = { side: '', attend: '', meal: '' };
 
         function openRsvpModal() {
-            document.getElementById('rsvpModal').classList.remove('hidden');
+            const modal = document.getElementById('rsvpModal');
+            modal.classList.remove('modal-closed');
+            modal.classList.add('modal-open');
         }
 
         function closeRsvpModal() {
-            document.getElementById('rsvpModal').classList.add('hidden');
+            const modal = document.getElementById('rsvpModal');
+            modal.classList.remove('modal-open');
+            modal.classList.add('modal-closed');
         }
 
         function selectOption(category, value, btnElement) {
@@ -437,7 +452,6 @@
             btnElement.classList.add('bg-black', 'text-white', 'border-black');
         }
 
-        // 파이어베이스 연동 제출
         let firebaseDatabase;
         let firebaseDbInstance;
 
