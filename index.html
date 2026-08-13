@@ -94,15 +94,17 @@
             will-change: opacity;
         }
 
-        /* --- ⭐️ 원하시는 순서대로 그려지는 하트 SVG 애니메이션 --- */
-        .heart-path {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            transition: stroke-dashoffset 2.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .heart-svg-box.draw-active .heart-path {
-            stroke-dashoffset: 0;
-        }
+/* SVG 선 그리기 애니메이션 */
+#heartSvg path {
+    stroke-dasharray: 2000; /* 선의 총 길이보다 크게 설정 */
+    stroke-dashoffset: 2000;
+    transition: stroke-dashoffset 3s ease-in-out;
+}
+
+/* draw-active 클래스가 붙으면 선이 그려짐 */
+.heart-svg-box.draw-active #heartSvg path {
+    stroke-dashoffset: 0;
+}
     </style>
 </head>
 <body class="flex justify-center items-start min-h-screen">
@@ -152,17 +154,9 @@
             
 <!-- 초대 글귀 (요청하신 순서: 좌측 밑 시작 -> 오른쪽 하트볼 -> 돼지꼬리 -> 왼쪽 하트볼 -> X자 교차 -> 우측 밑 퇴장) -->
             <div class="w-full relative mb-12 flex justify-center items-center px-6">
-                <div id="heartSvgBox" class="heart-svg-box absolute inset-0 pointer-events-none flex justify-center items-center z-0 overflow-visible">
-                    <svg class="w-full h-[220px]" viewBox="0 0 390 180" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                        <path class="heart-path" 
-                              d="M -10,150 C 60,148 135,130 178,105 C 220,55 255,18 228,15 C 205,12 188,38 200,52 C 210,62 225,48 205,25 C 185,8 142,22 148,68 C 158,102 185,122 215,138 C 275,144 335,148 400,150" 
-                              stroke="#D4AF37" 
-                              stroke-width="1.8" 
-                              stroke-linecap="round" 
-                              stroke-linejoin="round" 
-                              opacity="0.45"/>
-                    </svg>
-                </div>
+<div id="heartSvgBox" class="heart-svg-box absolute inset-0 pointer-events-none flex justify-center items-center z-0">
+    <img id="heartSvg" src="public/heart-drawing.svg" class="w-full opacity-60">
+</div>
 
                 <div class="text-[14px] text-gray-700 font-light leading-relaxed space-y-4 text-center fade-element z-10 relative">
                     <p>서로가 서로에게 머무를 곳이 되어<Br>이제 하나가 되려 합니다.</p>
@@ -184,7 +178,7 @@
                     <div class="grid grid-cols-7 gap-y-4 text-center text-[13px] font-normal text-black items-center">
                         <div></div><div></div><div></div><div></div>
                         <div>1</div><div>2</div>
-                        <div class="text-[#ed0000]">3</div>
+                        <div class="text-[#00a2ed]">3</div>
                         <div class="text-[#ed0000]">4</div>
                         <div class="flex justify-center items-center">
                             <span class="w-7 h-7 bg-black text-[#ed0000] flex justify-center items-center font-bold text-xs">5</span>
@@ -315,7 +309,7 @@
                     <div class="border border-gray-100 p-3.5 bg-gray-50/50 rounded-sm">
                         <div class="flex justify-between items-center text-xs">
                             <div>
-                                <p class="font-bold text-gray-900 mb-1">신랑 부 박종현</p>
+                                <p class="font-bold text-gray-900 mb-1">신랑 夫 박종현</p>
                                 <p class="text-gray-600">하나은행 5209-1002-988407</p>
                             </div>
                             <button onclick="copyText('5209-1002-988407')" class="bg-gray-200 px-3 py-1.5 rounded text-[11px] font-medium text-gray-700 hover:bg-gray-300 transition-colors">복사</button>
@@ -325,7 +319,7 @@
                     <div class="border border-gray-100 p-3.5 bg-gray-50/50 rounded-sm">
                         <div class="flex justify-between items-center text-xs">
                             <div>
-                                <p class="font-bold text-gray-900 mb-1">신랑 모 김경림</p>
+                                <p class="font-bold text-gray-900 mb-1">신랑 母 김경림</p>
                                 <p class="text-gray-600">농협 352-1479-1508-43</p>
                             </div>
                             <button onclick="copyText('352-1479-1508-43')" class="bg-gray-200 px-3 py-1.5 rounded text-[11px] font-medium text-gray-700 hover:bg-gray-300 transition-colors">복사</button>
@@ -350,7 +344,7 @@
                     <div class="border border-gray-100 p-3.5 bg-gray-50/50 rounded-sm">
                         <div class="flex justify-between items-center text-xs">
                             <div>
-                                <p class="font-bold text-gray-900 mb-1">신부 부 박영대</p>
+                                <p class="font-bold text-gray-900 mb-1">신부 夫 박영대</p>
                                 <p class="text-gray-600">농협 405-12-125697</p>
                             </div>
                             <button onclick="copyText('405-12-125697')" class="bg-gray-200 px-3 py-1.5 rounded text-[11px] font-medium text-gray-700 hover:bg-gray-300 transition-colors">복사</button>
@@ -360,7 +354,7 @@
                     <div class="border border-gray-100 p-3.5 bg-gray-50/50 rounded-sm">
                         <div class="flex justify-between items-center text-xs">
                             <div>
-                                <p class="font-bold text-gray-900 mb-1">신부 모 김시윤</p>
+                                <p class="font-bold text-gray-900 mb-1">신부 母 김시윤</p>
                                 <p class="text-gray-600">농협 426-02-040461</p>
                             </div>
                             <button onclick="copyText('426-02-040461')" class="bg-gray-200 px-3 py-1.5 rounded text-[11px] font-medium text-gray-700 hover:bg-gray-300 transition-colors">복사</button>
@@ -372,7 +366,7 @@
             <div class="w-full mt-8 p-4 bg-gray-50 text-center border border-gray-100 rounded-sm fade-element">
                 <p class="text-[12px] font-medium text-gray-800 mb-1">💐 축하 화환 안내</p>
                 <p class="text-[11px] text-gray-500 leading-relaxed">
-                    정중히 화환은 사양합니다.<br>
+                    화환은 정중히 사양합니다.<br>
                     보내주시는 따뜻한 축하의 마음만 감사히 받겠습니다.
                 </p>
             </div>
@@ -588,29 +582,32 @@
             targets.forEach(el => observer.observe(el));
         }
 
-        // --- 스크롤 양방향 하트 드로잉 엔진 ---
-        function setupHeartDrawingObserver() {
-            const heartBox = document.getElementById('heartSvgBox');
-            if (!heartBox) return;
-
-            const observerOptions = {
-                root: null,
-                threshold: 0.2
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('draw-active');
-                    } else {
-                        entry.target.classList.remove('draw-active');
-                    }
-                });
-            }, observerOptions);
-
-            observer.observe(heartBox);
+// 스크롤 시 하트 드로잉 (양방향 리셋 포함)
+function setupHeartDrawingObserver() {
+    const heartSvg = document.getElementById('heartSvg');
+    const heartBox = document.getElementById('heartSvgBox');
+    
+    // SVG가 다 로드된 후 path에 stroke 속성 부여
+    heartSvg.addEventListener('load', () => {
+        const path = heartSvg.contentDocument.querySelector('path');
+        if (path) {
+            path.style.stroke = '#D4AF37'; // 하트 색상
+            path.style.strokeWidth = '2';
         }
+    });
 
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                heartBox.classList.add('draw-active');
+            } else {
+                heartBox.classList.remove('draw-active');
+            }
+        });
+    }, { threshold: 0.3 });
+
+    observer.observe(heartBox);
+}
         // --- 스크롤 시 참석여부 팝업 자동 트리거 ---
         let hasTriggeredRsvp = false;
         function setupScrollRsvpTrigger() {
