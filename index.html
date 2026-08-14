@@ -22,26 +22,37 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-    /* GALLERY 섹션 썸네일 영역 전체 밀림 방지 */
-#thumbContainer {
-    width: 100%;
-    overflow-x: auto;
-    scrollbar-width: none; /* 파이어폭스 스크롤바 숨김 */
-}
-#thumbContainer::-webkit-scrollbar {
-    display: none; /* 크롬/사파리 스크롤바 숨김 */
+/* 2. 390px 모바일 카드가 절대 오른쪽으로 삐져나가지 않도록 강제 고정 */
+.w-\[390px\] {
+    width: 390px !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box;
 }
 
-/* 전체 청첩장 바디 영역이 가로로 넘쳐서 밀리는 것 원천 차단 */
-body {
-    overflow-x: hidden;
+/* 3. 내부 모든 섹션과 갤러리/썸네일 영역이 가로 스크롤을 유발하지 않도록 차단 */
+section, div, footer {
+    max-width: 100%;
+    box-sizing: border-box;
 }
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: #f3f4f6;
-            margin: 0;
-            padding: 0;
-        }
+
+/* 4. 썸네일 컨테이너 자체의 가로 밀림 원천 차단 */
+#thumbContainer {
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+#thumbContainer::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    width: 100%;
+    overflow-x: hidden !important;
+    background-color: #f3f4f6;
+    margin: 0;
+    padding: 0;
+}
         .serif-font {
             font-family: 'Cinzel', serif;
             letter-spacing: -0.01em;
