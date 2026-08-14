@@ -141,7 +141,7 @@ body {
     width: 150%;
     left: 50%;
     transform: translateX(-50%);
-    top: -110px;
+    top: -90px;
 }
 /* 스크롤로 해당 구역 진입 시 애니메이션 실행 */
 .heart-svg-box.draw-active .heart-path {
@@ -611,7 +611,7 @@ body {
             <div class="text-xs text-gray-800 space-y-5 font-normal leading-relaxed fade-element">
                 <div>
                     <p class="font-bold text-[15px] text-black mb-1">L65호텔웨딩컨벤션</p>
-                    <p class="text-gray-500 text-[14px]">서울 동대문구 왕산로 200 청량리역 롯데캐슬스카이-L65 타워동 6층 (02-2184-4500)</p>
+                    <p class="text-gray-500 text-[14px]">서울 동대문구 왕산로 200 청량리역 롯데캐슬스카이-L65 타워동 6층 가든홀 (02-2184-4500)</p>
                 </div>
                 <div>
                     <p class="font-bold text-[15px] text-black mb-1">자가용 이용 시</p>
@@ -963,31 +963,36 @@ swiper = new Swiper('.mainSwiper', {
         }
 
         // --- 메인 이미지 Full ➡️ 프레임 수축 스크롤 엔진 ---
-        function setupImageFrameOnScroll() {
-            const container = document.getElementById('mainImageContainer');
-            const frame = document.getElementById('mainImageFrame');
-            const overlay = document.getElementById('topFadeOverlay');
+function setupImageFrameOnScroll() {
+    const container = document.getElementById('mainImageContainer');
+    const frame = document.getElementById('mainImageFrame');
+    const overlay = document.getElementById('topFadeOverlay');
 
-            window.addEventListener('scroll', function() {
-                const scrollY = window.scrollY;
-                const maxScroll = 180; 
-                
-                let progress = Math.min(scrollY / maxScroll, 1);
-                
-                let paddingPx = progress * 24; 
-                let heightVh = 62 - (progress * 17); 
-                let borderRadius = progress * 4;
+    window.addEventListener('scroll', function() {
+        const scrollY = window.scrollY;
+        const maxScroll = 180; 
+        
+        let progress = Math.min(scrollY / maxScroll, 1);
+        
+        let paddingPx = progress * 24; 
 
-                container.style.paddingLeft = `${paddingPx}px`;
-                container.style.paddingRight = `${paddingPx}px`;
-                frame.style.height = `${heightVh}vh`;
-                frame.style.borderRadius = `${borderRadius}px`;
+        // ⭐️ 뷰포트 높이가 620px 이하일 때는 55vh ➔ 40vh, 평소에는 기존처럼 62vh ➔ 45vh
+        const isSmallScreen = window.innerHeight <= 620;
+        const startHeight = isSmallScreen ? 55 : 62;
+        const minHeight = isSmallScreen ? 40 : 45;
+        
+        let heightVh = startHeight - (progress * (startHeight - minHeight));
 
-                if(overlay) {
-                    overlay.style.opacity = `${1 - progress}`;
-                }
-            });
+        container.style.paddingLeft = `${paddingPx}px`;
+        container.style.paddingRight = `${paddingPx}px`;
+        frame.style.height = `${heightVh}vh`;
+
+
+        if(overlay) {
+            overlay.style.opacity = `${1 - progress}`;
         }
+    });
+}
 
         // --- 스크롤에 따른 페이드인 관찰 엔진 ---
         function setupScrollObserver() {
