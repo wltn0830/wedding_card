@@ -59,16 +59,23 @@ body {
             line-height: 0.95;
         }
 
-        /* 무한 텍스트 배너 */
-        @keyframes marquee {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-50%); }
-        }
-        .animate-marquee {
-            display: flex;
-            width: max-content;
-            animation: marquee 20s linear infinite;
-        }
+/* 무한 롤링 키프레임 정의 */
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* 롤링 띠 컨테이너 설정 */
+.marquee-container {
+    display: flex;
+    width: max-content;
+    animation: marquee 12s linear infinite;
+}
+
+/* 마우스나 터치로 흔들리지 않게 고정 */
+.marquee-container:hover {
+    animation-play-state: running;
+}
 
         /* 팝업 스르륵 트랜지션 (기본 상태: 닫힘) */
         #rsvpModal {
@@ -623,19 +630,13 @@ body {
             </div>
         </section>
 
-<!-- 무한 띠 배너 (글자 겹침 및 줄바꿈 완벽 방지) -->
+<!-- 무한 띠 배너 (완벽한 단일 컨테이너 롤링 구조) -->
 <div class="w-full py-4 bg-black overflow-hidden flex select-none box-border">
-    <div class="animate-marquee text-white text-[11px] font-medium tracking-widest uppercase flex items-center shrink-0 space-x-6 whitespace-nowrap">
-        <span>✦ 2026년 10월 5일 월요일 오후 4시</span>
-        <span>✦ 2026년 10월 5일 월요일 오후 4시</span>
-        <span>✦ 2026년 10월 5일 월요일 오후 4시</span>
-        <span>✦ 2026년 10월 5일 월요일 오후 4시</span>
-    </div>
-    <div class="animate-marquee text-white text-[11px] font-medium tracking-widest uppercase flex items-center shrink-0 space-x-6 whitespace-nowrap" aria-hidden="true">
-        <span>✦ 2026년 10월 5일 월요일 오후 4시</span>
-        <span>✦ 2026년 10월 5일 월요일 오후 4시</span>
-        <span>✦ 2026년 10월 5일 월요일 오후 4시</span>
-        <span>✦ 2026년 10월 5일 월요일 오후 4시</span>
+    <div class="marquee-container text-white text-[11px] font-medium tracking-widest uppercase whitespace-nowrap">
+        <span class="inline-block px-4">✦ 2026년 10월 5일 월요일 오후 4시</span>
+        <span class="inline-block px-4">✦ 2026년 10월 5일 월요일 오후 4시</span>
+        <span class="inline-block px-4">✦ 2026년 10월 5일 월요일 오후 4시</span>
+        <span class="inline-block px-4">✦ 2026년 10월 5일 월요일 오후 4시</span>
     </div>
 </div>
 
