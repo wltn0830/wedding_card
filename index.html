@@ -150,7 +150,15 @@ body {
     </style>
 </head>
 <body class="flex justify-center items-start min-h-screen">
+<!-- 배경음악 오디오 태그 (loop: 반복재생) -->
+<audio id="bgMusic" src="public/wedding_bgm.mp3" loop preload="auto"></audio>
 
+<!-- 우측 상단 플로팅 음악 재생/정지 버튼 -->
+<button id="musicToggleBtn" onclick="toggleMusic()" class="fixed top-4 right-4 z-50 w-9 h-9 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-md border border-gray-200 transition-transform active:scale-95">
+    <svg id="musicIcon" class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+    </svg>
+</button>
     <div class="w-[390px] bg-white shadow-2xl flex flex-col relative overflow-hidden">
 
                         
@@ -1141,6 +1149,57 @@ function setupHeartDrawingObserver() {
                 alert('전달 실패. 다시 시도해주세요.');
             });
         }
+        
+        let isPlaying = false;
+
+// 음악 재생/정지 토글 버튼 기능
+function toggleMusic() {
+    const music = document.getElementById('bgMusic');
+    const icon = document.getElementById('musicIcon');
+
+    if (isPlaying) {
+        music.pause();
+        icon.classList.remove('animate-spin'); // 재생 중 아닐 때 멈춤
+        isPlaying = false;
+    } else {
+        music.play().then(() => {
+            icon.classList.add('animate-spin'); // 재생 중일 때 아이콘 빙글빙글 회전 효과
+            isPlaying = true;
+        }).catch(e => {
+            console.log("재생 실패:", e);
+        });
+    }
+}
+
+// 페이지가 열릴 때 자동 재생 시도
+window.addEventListener('DOMContentLoaded', () => {
+    const music = document.getElementById('bgMusic');
+    const icon = document.getElementById('musicIcon');
+    
+    music.volume = 0.4; // 볼륨을 40%로 부드럽게 설정
+    
+    // 1단계: 자동재생 시도
+    music.play().then(() => {
+        isPlaying = true;
+        icon.classList.add('animate-spin');
+    }).catch(() => {
+        // 2단계: 브라우저가 막았을 경우, 하객이 화면을 처음 터치(클릭)하는 순간 음악이 켜지도록 대기
+        console.log("브라우저 정책으로 자동재생 차단됨. 첫 터치 시 재생 대기 중...");
+        
+        const unlockAudio = () => {
+            music.play().then(() => {
+                isPlaying = true;
+                icon.classList.add('animate-spin');
+                // 한 번 재생되면 이벤트 리스너 제거
+                document.removeEventListener('click', unlockAudio);
+                document.removeEventListener('touchstart', unlockAudio);
+            }).catch(err => console.log(err));
+        };
+
+        document.addEventListener('click', unlockAudio);
+        document.addEventListener('touchstart', unlockAudio);
+    });
+});
     </script>
 </body>
 </html>
