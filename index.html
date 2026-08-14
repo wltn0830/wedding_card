@@ -109,7 +109,7 @@
     width: 150%;
     left: 50%;
     transform: translateX(-50%);
-    top: -50px;
+    top: -110px;
 }
 /* 스크롤로 해당 구역 진입 시 애니메이션 실행 */
 .heart-svg-box.draw-active .heart-path {
@@ -157,7 +157,7 @@
         <!-- 2. 신랑신부 초대글 섹션 -->
         <section class="w-full py-16 px-6 bg-white border-gray-50 flex flex-col items-center text-center">
             <!-- 혼주 정보 -->
-            <div class="w-full pt-8 border-gray-100 text-xs text-gray-800 space-y-2 text-center mb-12 fade-element">
+            <div class="w-full  border-gray-100 text-xs text-gray-800 space-y-2 text-center mb-12 fade-element">
                 <p><span class="font-bold text-[1rem] leading-[1.2]">박종현 · 김경림</span> 의 아들 <span class="font-bold text-[1.2rem] leading-[1.2] text-black">대승</span></p>
                 <p><span class="font-bold text-[1rem] leading-[1.2]">박영대 · 김시윤</span> 의 딸 <span class="font-bold text-[1.2rem] leading-[1.2] text-black">서우</span></p>
             </div>
@@ -970,7 +970,7 @@ function setupHeartDrawingObserver() {
         path.style.strokeDasharray = length;
         path.style.strokeDashoffset = length;
         path.style.transition = 'stroke-dashoffset 2.5s ease-out';
-        path.style.stroke = '#D4AF37'; // 골드 색상
+        path.style.stroke = '#00000080'; // 골드 색상
         path.style.strokeWidth = '2';   // 선 굵기
         path.style.fill = 'none';
     });
