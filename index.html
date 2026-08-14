@@ -121,24 +121,11 @@
 
     <div class="w-[390px] bg-white shadow-2xl flex flex-col relative overflow-hidden">
         <!-- 1. 메인 인트로 표지 섹션 -->
-<section class="w-full min-h-[100dvh] bg-white pt-16 pb-6 flex flex-col justify-between items-center text-center relative overflow-hidden">
+<section class="w-full min-h-[92vh] bg-white pt-8 pb-4 flex flex-col justify-between items-center text-center relative">
     
-    <!-- ⭐️ 배경처럼 밑으로 깔리는 메인 이미지 구역 (absolute) -->
-    <div id="mainImageContainer" class="absolute inset-0 w-full h-full px-0 pb-2 flex items-end justify-center z-0">
-        <div id="mainImageFrame" class="w-full h-full bg-gray-100 relative overflow-hidden flex items-center justify-center rounded-none">
-            
-            <!-- 사진 상단 은은하게 이어주는 페이드 그라데이션 레이어 -->
-            <div id="topFadeOverlay" class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white via-white/70 to-transparent z-10 pointer-events-none"></div>
 
-            <img src="public/main_00.jpg" fetchpriority="high" loading="eager" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="w-full h-full object-cover">
-            <div class="hidden absolute inset-0 flex-col items-center justify-center text-gray-400 text-xs bg-gray-100 p-4">
-                <span>여기에 메인 사진이 들어갑니다</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- ⭐️ 위로 자연스럽게 얹어지는 상단 타이틀 텍스트 (z-10) -->
-    <div id="introTitle" class="w-full pt-12 px-6 mb-4 fade-element is-visible z-10">
+    <!-- 상단 타이틀 텍스트 -->
+    <div id="introTitle" class="w-full pt-4 pb-2 flex flex-col justify-center items-center px-6 fade-element is-visible z-10">
                 <h1 class=" mt-5 serif-font text-[40px] line-height-22 text-black font-normal tracking-wide uppercase mb-3 leading-tight">
                     DAESEUNG<br>&<br>SEOWOO<br>WEDDING
                 </h1>
@@ -148,9 +135,23 @@
                 </div>
     </div>
     
-    <!-- 하단 통통 튀는 화살표 아이콘 -->
-    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-white rounded-full flex justify-center items-center shadow-md animate-bounce z-20">
-        <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+    <!-- 스크롤 시 풀 사이즈에서 정사이즈 카드로 수축하는 이미지 구역 -->
+    <div id="mainImageContainer" class="w-full px-0 pt-2 pb-2 flex items-end justify-center relative">
+        <div id="mainImageFrame" class="w-full h-[58vh] bg-gray-100 relative overflow-hidden flex items-center justify-center rounded-none">
+            
+            <!-- 사진 상단 은은하게 이어주는 흰색 페이드 그라데이션 레이어 -->
+            <div id="topFadeOverlay" class="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white via-white/70 to-transparent z-10 pointer-events-none"></div>
+
+            <img src="public/main_00.jpg" fetchpriority="high" loading="eager" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="w-full h-full object-cover">
+            <div class="hidden absolute inset-0 flex-col items-center justify-center text-gray-400 text-xs bg-gray-100 p-4">
+                <span>여기에 메인 사진이 들어갑니다</span>
+            </div>
+            
+            <!-- 통통 튀는 화살표 아이콘 -->
+            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 w-7 h-7 bg-white rounded-full flex justify-center items-center shadow-md animate-bounce z-20">
+                <svg class="w-3.5 h-3.5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
+        </div>
     </div>
 </section>
        
