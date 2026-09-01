@@ -798,10 +798,11 @@ body {
             <p class="text-xs text-gray-400 font-light mb-10">즐거운 날 함께해 주시면 감사하겠습니다</p>
             
             <div class="w-full space-y-3 max-w-[280px]">
+                <!--
                 <button onclick="openRsvpModal()" class="w-full bg-white text-black text-xs font-medium py-3.5 flex justify-between items-center px-5 tracking-wide">
                     <span>참석여부 전달하기</span>
                     <span>✉️</span>
-                </button>
+                </button>-->
                 <button onclick="shareKakao()" class="w-full bg-transparent text-white border border-white/30 text-xs font-medium py-3.5 flex justify-between items-center px-5 tracking-wide">
                     <span>카카오톡 공유하기</span>
                     <span>↗</span>
@@ -815,7 +816,7 @@ body {
 
     </div>
 
-    <!-- 참석 여부 전달 모달 팝업 -->
+    <!-- 참석 여부 전달 모달 팝업 
     <div id="rsvpModal" class="fixed inset-0 bg-black/60 z-50 flex justify-center items-center p-4 modal-closed">
         <div id="rsvpModalContent" class="w-[360px] max-h-[90vh] bg-white rounded-md shadow-2xl flex flex-col overflow-hidden">
             <div class="flex justify-between items-center px-5 py-4 border-b border-gray-100">
@@ -865,7 +866,7 @@ body {
                 <button onclick="submitRsvp()" class="w-2/3 bg-black text-white py-3 text-xs font-medium tracking-wider hover:bg-gray-900">전달하기</button>
             </div>
         </div>
-    </div>
+    </div>-->
 
     <!-- 카카오 SDK 로드 -->
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
